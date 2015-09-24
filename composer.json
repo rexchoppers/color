@@ -1,0 +1,24 @@
+{
+    "name": "martin/color",
+    "authors": [
+        {
+            "name": "Martin Dilling-Hansen",
+            "email": "martin.dilling-hansen@wegottickets.com"
+        }
+    ],
+    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "4.8.*",
+        "hamcrest/hamcrest-php": "1.2.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Color\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\Color\\": "test/"
+        }
+    }
+}
