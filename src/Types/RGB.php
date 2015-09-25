@@ -4,10 +4,10 @@ namespace Color\Types;
 
 use function ConvertColor\RGBtoHEX;
 use function ConvertColor\RGBtoHSL;
-use Color\Type;
+use Color\Color;
 use Color\Exceptions\InvalidArgument;
 
-class RGB implements Type
+class RGB implements Color
 {
     /**
      * @var int (0-255)
@@ -97,6 +97,8 @@ class RGB implements Type
     }
 
     /**
+     * Get a new instance with a new red value.
+     *
      * @param int $red
      *
      * @return static
@@ -107,6 +109,8 @@ class RGB implements Type
     }
 
     /**
+     * Get a new instance with a new green value.
+     *
      * @param int $green
      *
      * @return static
@@ -117,6 +121,8 @@ class RGB implements Type
     }
 
     /**
+     * Get a new instance with a new blue value.
+     *
      * @param int $blue
      *
      * @return static
@@ -127,6 +133,8 @@ class RGB implements Type
     }
 
     /**
+     * Get a new instance with a new template.
+     *
      * @param string $template
      *
      * @return static

@@ -6,50 +6,42 @@ use Color\Types\HEX;
 use Color\Types\HSL;
 use Color\Types\RGB;
 
-class Color
+interface Color
 {
-    private $color;
-    private $types;
-
-    public function __construct(Type $color)
-    {
-        $this->color = $color;
-
-//        $this->types = [
-//            HEX::key() => HEX::class,
-//            RGB::key() => RGB::class,
-//            HSL::key() => HSL::class,
-//        ];
-//
-//        $this->types[$color::key()] = $color;
-    }
-
-    public function __get($type)
-    {
-        $typeClass = $this->findTypeByKey($type);
-
-        return $typeClass;
-    }
+    /**
+     * Get a new instance with a new template.
+     *
+     * @param string $template
+     *
+     * @return static
+     */
+    public function withTemplate($template);
 
     /**
-     * @param string $key
+     * Cast to string.
      *
-     * @return mixed
-     *
-     * @throws \Exception
+     * @return string
      */
-    private function findTypeByKey($key)
-    {
-        if ( ! array_key_exists($key, $this->types)) {
-            throw new \Exception("Can't find type with key: {$key}");
-        }
+    public function __toString();
 
-        $type = $this->types[$key];
+    /**
+     * Get color in HEX.
+     *
+     * @return HEX
+     */
+    public function toHEX();
 
-        if ($type instanceof Type) {
-            return $type;
-        }
+    /**
+     * Get color in RGB.
+     *
+     * @return RGB
+     */
+    public function toRGB();
 
-        return $this->color->to(new $type());
-    }
+    /**
+     * Get color in HSL.
+     *
+     * @return HSL
+     */
+    public function toHSL();
 }

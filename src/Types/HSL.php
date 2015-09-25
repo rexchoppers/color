@@ -4,10 +4,10 @@ namespace Color\Types;
 
 use function ConvertColor\HSLtoRGB;
 use function ConvertColor\RGBtoHEX;
-use Color\Type;
+use Color\Color;
 use Color\Exceptions\InvalidArgument;
 
-class HSL implements Type
+class HSL implements Color
 {
     /**
      * @var int (0-360)
@@ -97,6 +97,8 @@ class HSL implements Type
     }
 
     /**
+     * Get a new instance with a new hue value.
+     *
      * @param int $hue
      *
      * @return static
@@ -107,6 +109,8 @@ class HSL implements Type
     }
 
     /**
+     * Get a new instance with a new saturation value.
+     *
      * @param int $saturation
      *
      * @return static
@@ -117,6 +121,8 @@ class HSL implements Type
     }
 
     /**
+     * Get a new instance with a new lightness value.
+     *
      * @param int $lightness
      *
      * @return static
@@ -127,6 +133,8 @@ class HSL implements Type
     }
 
     /**
+     * Get a new instance with a new template.
+     *
      * @param string $template
      *
      * @return static

@@ -4,10 +4,10 @@ namespace Color\Types;
 
 use function ConvertColor\HEXtoRGB;
 use function ConvertColor\RGBtoHSL;
-use Color\Type;
+use Color\Color;
 use Color\Exceptions\InvalidArgument;
 
-class HEX implements Type
+class HEX implements Color
 {
     /**
      * @var string (000000-FFFFFF)
@@ -49,6 +49,8 @@ class HEX implements Type
     }
 
     /**
+     * Get a new instance with a new template.
+     *
      * @param string $template
      *
      * @return static
