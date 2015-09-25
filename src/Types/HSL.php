@@ -175,6 +175,36 @@ class HSL implements Color
     }
 
     /**
+     * Saturate the color.
+     *
+     * @param int $pct
+     *
+     * @return static
+     */
+    public function saturate($pct)
+    {
+        $saturation = $this->saturation() + $pct;
+        $saturation = $saturation > 100 ? 100 : $saturation;
+
+        return $this->withSaturation($saturation);
+    }
+
+    /**
+     * Desaturate the color.
+     *
+     * @param int $pct
+     *
+     * @return static
+     */
+    public function desaturate($pct)
+    {
+        $saturation = $this->saturation() - $pct;
+        $saturation = $saturation < 0 ? 0 : $saturation;
+
+        return $this->withSaturation($saturation);
+    }
+
+    /**
      * Get color in HEX.
      *
      * @return HEX
