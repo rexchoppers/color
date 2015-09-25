@@ -2,10 +2,10 @@
 
 namespace Tests\Color\Types;
 
+use Color\Exceptions\InvalidArgument;
 use Color\Types\HEX;
 use Color\Types\HSL;
 use Color\Types\RGB;
-use Color\Exceptions\InvalidArgument;
 
 class HSLTest extends \PHPUnit_Framework_TestCase
 {
@@ -215,5 +215,30 @@ class HSLTest extends \PHPUnit_Framework_TestCase
         $hsl = $hsl->desaturate(11);
 
         assertThat((string) $hsl, is('0deg 0pct 50pct'));
+    }
+
+    /**
+     * @test
+     * @dataProvider mixDataset
+     */
+    public function it_can_mix_two_colors_and_return_the_mixed_color($one, $two, $mix)
+    {
+        $first = new HSL(...$one);
+        $second = new HSL(...$two);
+
+        $mixed = $first->mix($second);
+
+        assertThat((string) $mixed->withTemplate('{hue}deg {saturation}pct {lightness}pct'), is("{$mix[0]}deg {$mix[1]}pct {$mix[2]}pct"));
+    }
+
+    /**
+     * @return array
+     */
+    public function mixDataset()
+    {
+        return [
+            ['one' => [0, 100, 50], 'two' => [120, 100, 50], 'mix' => [60, 100, 50]],
+            ['one' => [344, 70, 31], 'two' => [112, 90, 78], 'mix' => [48, 80, 55]],
+        ];
     }
 }

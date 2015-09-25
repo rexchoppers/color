@@ -205,6 +205,22 @@ class HSL implements Color
     }
 
     /**
+     * Get the mix between this and the given color.
+     *
+     * @param HSL $color
+     *
+     * @return static
+     */
+    public function mix(HSL $color)
+    {
+        $hue = ($this->hue() + $color->hue()) / 2;
+        $saturation = ($this->saturation() + $color->saturation()) / 2;
+        $lightness = ($this->lightness() + $color->lightness()) / 2;
+
+        return new self($hue, $saturation, $lightness, $this->template);
+    }
+
+    /**
      * Get color in HEX.
      *
      * @return HEX
