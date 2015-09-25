@@ -5,10 +5,9 @@ namespace Color\Types;
 use function ConvertColor\HSLtoRGB;
 use function ConvertColor\RGBtoHEX;
 use Color\Type;
-use Color\Converts;
 use Color\Exceptions\InvalidArgument;
 
-class HSL implements Type, Converts
+class HSL implements Type
 {
     /**
      * @var int (0-360)

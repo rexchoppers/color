@@ -5,10 +5,9 @@ namespace Color\Types;
 use function ConvertColor\HEXtoRGB;
 use function ConvertColor\RGBtoHSL;
 use Color\Type;
-use Color\Converts;
 use Color\Exceptions\InvalidArgument;
 
-class HEX implements Type, Converts
+class HEX implements Type
 {
     /**
      * @var string (000000-FFFFFF)
