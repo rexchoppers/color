@@ -82,56 +82,58 @@ class HSLTest extends \PHPUnit_Framework_TestCase
     {
         $hsl = new HSL(0, 100, 50);
 
-        $clone = $hsl->toHSL();
+        $clone = $hsl->toHSL()->withTemplate('{hue}deg {saturation}pct {lightness}pct');
 
         assertThat($clone, is(anInstanceOf(HSL::class)));
         assertThat($clone, is(not(sameInstance($hsl))));
-        assertThat((string) $clone, is('0° 100% 50%'));
+        assertThat((string) $clone, is('0deg 100pct 50pct'));
     }
-
-//    /** @test */
-//    public function it_can_convert_to_hex()
-//    {
-//        $rgb = new HSL(0, 100, 50);
-//
-//        $hex = $rgb->toHEX();
-//
-//        assertThat($hex, is(anInstanceOf(HEX::class)));
-//        assertThat((string) $hex, is('#FF0000'));
-//    }
 
     /**
      * @test
-     * @dataProvider toRgbDataset
+     * @dataProvider colorsDataset
      */
-    public function it_can_convert_to_rgb($rgb, $hsl)
+    public function it_can_convert_to_hex($hexData, $rgbData, $hslData)
     {
-        $hslObj = new HSL(...$hsl);
+        $hsl = new HSL(...$hslData);
 
-        $rgbObj = $hslObj->toRGB();
+        $hex = $hsl->toHEX()->withTemplate('# {code}');
 
-        assertThat($rgbObj, is(anInstanceOf(RGB::class)));
-        assertThat((string) $rgbObj, is("{$rgb[0]},{$rgb[1]},{$rgb[2]}"));
+        assertThat($hex, is(anInstanceOf(HEX::class)));
+        assertThat((string) $hex, is("# {$hexData}"));
+    }
+
+    /**
+     * @test
+     * @dataProvider colorsDataset
+     */
+    public function it_can_convert_to_rgb($hexData, $rgbData, $hslData)
+    {
+        $hsl = new HSL(...$hslData);
+
+        $rgb = $hsl->toRGB()->withTemplate('{red}, {green}, {blue}');
+
+        assertThat($rgb, is(anInstanceOf(RGB::class)));
+        assertThat((string) $rgb, is("{$rgbData[0]}, {$rgbData[1]}, {$rgbData[2]}"));
     }
 
     /**
      * @return array
      */
-    public function toRgbDataset()
+    public function colorsDataset()
     {
         return [
-            ["rgb" => [0, 0, 0], "hsl" => [0, 0, 0]],
-            ["rgb" => [255, 255, 255], "hsl" => [0, 0, 100]],
-            ["rgb" => [127, 127, 127], "hsl" => [0, 0, 50]],
-            ["rgb" => [255, 0, 0], "hsl" => [0, 100, 50]],
-            ["rgb" => [0, 255, 0], "hsl" => [120, 100, 50]],
-            ["rgb" => [0, 0, 255], "hsl" => [240, 100, 50]],
-            ["rgb" => [0, 255, 255], "hsl" => [180, 100, 50]],
-            ["rgb" => [255, 0, 255], "hsl" => [300, 100, 50]],
-            ["rgb" => [255, 255, 0], "hsl" => [60, 100, 50]],
-            ["rgb" => [255, 95, 71], "hsl" => [8, 100, 64]],
-            ["rgb" => [255, 117, 101], "hsl" => [6, 100, 70]],
-            ["rgb" => [255, 204, 212], "hsl" => [351, 100, 90]],
+            ['hex' => '000000', 'rgb' => [0, 0, 0], 'hsl' => [0, 0, 0]],
+            ['hex' => 'FFFFFF', 'rgb' => [255, 255, 255], 'hsl' => [0, 0, 100]],
+            ['hex' => '7F7F7F', 'rgb' => [127, 127, 127], 'hsl' => [0, 0, 50]],
+            ['hex' => 'FF0000', 'rgb' => [255, 0, 0], 'hsl' => [0, 100, 50]],
+            ['hex' => '00FF00', 'rgb' => [0, 255, 0], 'hsl' => [120, 100, 50]],
+            ['hex' => '0000FF', 'rgb' => [0, 0, 255], 'hsl' => [240, 100, 50]],
+            ['hex' => '00FFFF', 'rgb' => [0, 255, 255], 'hsl' => [180, 100, 50]],
+            ['hex' => 'FF00FF', 'rgb' => [255, 0, 255], 'hsl' => [300, 100, 50]],
+            ['hex' => 'FFFF00', 'rgb' => [255, 255, 0], 'hsl' => [60, 100, 50]],
+            ['hex' => 'FF5F47', 'rgb' => [255, 95, 71], 'hsl' => [8, 100, 64]],
+            ['hex' => 'FF7565', 'rgb' => [255, 117, 101], 'hsl' => [6, 100, 70]],
         ];
     }
 }

@@ -12,6 +12,9 @@
         "hamcrest/hamcrest-php": "1.2.*"
     },
     "autoload": {
+        "files": [
+            "src/functions.php"
+        ],
         "psr-4": {
             "Color\\": "src/"
         }

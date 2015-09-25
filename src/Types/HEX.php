@@ -2,8 +2,10 @@
 
 namespace Color\Types;
 
-use Color\Converts;
+use function ConvertColor\HEXtoRGB;
+use function ConvertColor\RGBtoHSL;
 use Color\Type;
+use Color\Converts;
 use Color\Exceptions\InvalidArgument;
 
 class HEX implements Type, Converts
@@ -14,26 +16,26 @@ class HEX implements Type, Converts
     private $code;
 
     /**
-     * Get the key for this type, used to access the type from the color object.
-     *
-     * @return string
+     * @var string
      */
-    public static function key()
-    {
-        return 'hex';
-    }
+    private $template = '#{code}';
 
     /**
      * Hex constructor.
      *
      * @param string $code
+     * @param null|string $template
      *
      * @throws InvalidArgument
      */
-    public function __construct($code = '000000')
+    public function __construct($code = '000000', $template = null)
     {
         if ( ! $this->isHexColor($code)) {
             throw new InvalidArgument("Hex value was expected but [{$code}] was given.");
+        }
+
+        if ($template) {
+            $this->template = $template;
         }
 
         $this->code = $this->sanitize($code);
@@ -48,13 +50,23 @@ class HEX implements Type, Converts
     }
 
     /**
+     * @param string $template
+     *
+     * @return static
+     */
+    public function withTemplate($template)
+    {
+        return new static($this->code(), $template);
+    }
+
+    /**
      * Get color in HEX.
      *
      * @return HEX
      */
     public function toHEX()
     {
-        return clone $this;
+        return new HEX($this->code());
     }
 
     /**
@@ -64,9 +76,7 @@ class HEX implements Type, Converts
      */
     public function toRGB()
     {
-        $rgb = array_map('hexdec',str_split($this->code(), 2));
-
-        return new RGB(...$rgb);
+        return new RGB(...HEXtoRGB($this->code()));
     }
 
     /**
@@ -76,7 +86,7 @@ class HEX implements Type, Converts
      */
     public function toHSL()
     {
-        return new HSL();
+        return new HSL(...RGBtoHSL(...HEXtoRGB($this->code())));
     }
 
     /**
@@ -86,7 +96,15 @@ class HEX implements Type, Converts
      */
     public function __toString()
     {
-        return (string) "#{$this->code}";
+        return str_replace(
+            [
+                '{code}',
+            ],
+            [
+                $this->code(),
+            ],
+            $this->template
+        );
     }
 
     /**

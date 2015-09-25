@@ -2,47 +2,45 @@
 
 namespace Color\Types;
 
-use Color\Converts;
+use function ConvertColor\HSLtoRGB;
+use function ConvertColor\RGBtoHEX;
 use Color\Type;
+use Color\Converts;
 use Color\Exceptions\InvalidArgument;
 
 class HSL implements Type, Converts
 {
     /**
-     * @var float (0-360)
+     * @var int (0-360)
      */
     private $hue;
 
     /**
-     * @var float (0-100)
+     * @var int (0-100)
      */
     private $saturation;
 
     /**
-     * @var float (0-100)
+     * @var int (0-100)
      */
     private $lightness;
 
     /**
-     * Get the key for this type, used to access the type from the color object.
-     *
-     * @return string
+     * @var string
      */
-    public static function key()
-    {
-        return 'hsl';
-    }
+    private $template = '{hue}° {saturation}% {lightness}%';
 
     /**
      * HSL constructor.
      *
-     * @param float $hue
-     * @param float $saturation
-     * @param float $lightness
+     * @param int $hue
+     * @param int $saturation
+     * @param int $lightness
+     * @param null|string $template
      *
      * @throws InvalidArgument
      */
-    public function __construct($hue = 0.0, $saturation = 0.0, $lightness = 0.0)
+    public function __construct($hue = 0, $saturation = 0, $lightness = 0, $template = null)
     {
         if ( ! $this->isDegree($hue)) {
             throw new InvalidArgument("Degree (0-360) value was expected but [{$hue}] was given.");
@@ -54,25 +52,17 @@ class HSL implements Type, Converts
             throw new InvalidArgument("Percent (0-100) value was expected but [{$lightness}] was given.");
         }
 
-        $this->hue = (float) $hue;
-        $this->saturation = (float) $saturation;
-        $this->lightness = (float) $lightness;
+        if ($template) {
+            $this->template = $template;
+        }
+
+        $this->hue = (int) $hue;
+        $this->saturation = (int) $saturation;
+        $this->lightness = (int) $lightness;
     }
 
     /**
-     * Convert current type to another type.
-     *
-     * @param Type $type
-     *
-     * @return Type
-     */
-    public function to(Type $type)
-    {
-        // TODO: Implement to() method.
-    }
-
-    /**
-     * @return float
+     * @return int
      */
     public function hue()
     {
@@ -80,7 +70,7 @@ class HSL implements Type, Converts
     }
 
     /**
-     * @return float
+     * @return int
      */
     public function saturation()
     {
@@ -88,7 +78,7 @@ class HSL implements Type, Converts
     }
 
     /**
-     * @return float
+     * @return int
      */
     public function lightness()
     {
@@ -96,33 +86,55 @@ class HSL implements Type, Converts
     }
 
     /**
-     * @param float $hue
+     * @return array
+     */
+    public function hsl()
+    {
+        return [
+            $this->hue(),
+            $this->saturation(),
+            $this->lightness(),
+        ];
+    }
+
+    /**
+     * @param int $hue
      *
      * @return static
      */
     public function withHue($hue)
     {
-        return new static($hue, $this->saturation, $this->lightness);
+        return new static($hue, $this->saturation(), $this->lightness());
     }
 
     /**
-     * @param float $saturation
+     * @param int $saturation
      *
      * @return static
      */
     public function withSaturation($saturation)
     {
-        return new static($this->hue, $saturation, $this->lightness);
+        return new static($this->hue(), $saturation, $this->lightness());
     }
 
     /**
-     * @param float $lightness
+     * @param int $lightness
      *
      * @return static
      */
     public function withLightness($lightness)
     {
-        return new static($this->hue, $this->saturation, $lightness);
+        return new static($this->hue(), $this->saturation(), $lightness);
+    }
+
+    /**
+     * @param string $template
+     *
+     * @return static
+     */
+    public function withTemplate($template)
+    {
+        return new static($this->hue(), $this->saturation(), $this->lightness(), $template);
     }
 
     /**
@@ -132,64 +144,17 @@ class HSL implements Type, Converts
      */
     public function toHEX()
     {
-        return new HEX();
+        return new HEX(RGBtoHEX(...HSLtoRGB(...$this->hsl())));
     }
 
     /**
      * Get color in RGB.
      *
-     * http://www.rapidtables.com/convert/color/hsl-to-rgb.htm
-     *
-     * Maybe: http://stackoverflow.com/questions/4784040/rgb-to-hsl-hue-calculation-is-wrong?rq=1
-     *
-     * 0 ≤ $hue < 360
-     * 0 ≤ $saturation ≤ 1
-     * 0 ≤ $lightness ≤ 1
-     *
-     * $c = Chroma
-     * $x = Second largest component of this color
-     * $m = Amount to add to match lightness
-     *
      * @return RGB
      */
     public function toRGB()
     {
-        $hue = $this->hue;
-        $saturation = $this->saturation / 100;
-        $lightness = $this->lightness / 100;
-
-        $c = (1 - abs(2 * $lightness - 1)) * $saturation;
-        $x = $c * (1 - abs(fmod(($hue / 60), 2) - 1));
-        $m = $lightness - ($c / 2);
-
-        switch (true) {
-            case ($hue < 60):
-                $rgb = [$c, $x, 0];
-                break;
-            case ($hue < 120):
-                $rgb = [$x, $c, 0];
-                break;
-            case ($hue < 180):
-                $rgb = [0, $c, $x];
-                break;
-            case ($hue < 240):
-                $rgb = [0, $x, $c];
-                break;
-            case ($hue < 300):
-                $rgb = [$x, 0, $c];
-                break;
-            case ($hue < 360):
-                $rgb = [$c, 0, $x];
-                break;
-        }
-
-        $rgb = [
-            floor(($rgb[0] + $m) * 255),
-            floor(($rgb[1] + $m) * 255),
-            floor(($rgb[2] + $m) * 255)
-        ];
-
-        return new RGB(...$rgb);
+        return new RGB(...HSLtoRGB(...$this->hsl()));
     }
 
     /**
@@ -209,11 +174,23 @@ class HSL implements Type, Converts
      */
     public function __toString()
     {
-        return "{$this->hue}° {$this->saturation}% {$this->lightness}%";
+        return str_replace(
+            [
+                '{hue}',
+                '{saturation}',
+                '{lightness}',
+            ],
+            [
+                $this->hue(),
+                $this->saturation(),
+                $this->lightness(),
+            ],
+            $this->template
+        );
     }
 
     /**
-     * @param float $value
+     * @param int $value
      *
      * @return bool
      */
@@ -227,7 +204,7 @@ class HSL implements Type, Converts
     }
 
     /**
-     * @param float $value
+     * @param int $value
      *
      * @return bool
      */

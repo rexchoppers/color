@@ -15,13 +15,13 @@ class Color
     {
         $this->color = $color;
 
-        $this->types = [
-            HEX::key() => HEX::class,
-            RGB::key() => RGB::class,
-            HSL::key() => HSL::class,
-        ];
-
-        $this->types[$color::key()] = $color;
+//        $this->types = [
+//            HEX::key() => HEX::class,
+//            RGB::key() => RGB::class,
+//            HSL::key() => HSL::class,
+//        ];
+//
+//        $this->types[$color::key()] = $color;
     }
 
     public function __get($type)

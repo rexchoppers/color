@@ -2,8 +2,10 @@
 
 namespace Color\Types;
 
-use Color\Converts;
+use function ConvertColor\RGBtoHEX;
+use function ConvertColor\RGBtoHSL;
 use Color\Type;
+use Color\Converts;
 use Color\Exceptions\InvalidArgument;
 
 class RGB implements Type, Converts
@@ -24,14 +26,9 @@ class RGB implements Type, Converts
     private $blue;
 
     /**
-     * Get the key for this type, used to access the type from the color object.
-     *
-     * @return string
+     * @var string
      */
-    public static function key()
-    {
-        return 'rgb';
-    }
+    private $template = '{red},{green},{blue}';
 
     /**
      * RGB constructor.
@@ -39,10 +36,11 @@ class RGB implements Type, Converts
      * @param int $red
      * @param int $green
      * @param int $blue
+     * @param null|string $template
      *
      * @throws InvalidArgument
      */
-    public function __construct($red = 0, $green = 0, $blue = 0)
+    public function __construct($red = 0, $green = 0, $blue = 0, $template = null)
     {
         if ( ! $this->isDecimal($red)) {
             throw new InvalidArgument("Decimal (0-255) value was expected but [{$red}] was given.");
@@ -52,6 +50,10 @@ class RGB implements Type, Converts
         }
         if ( ! $this->isDecimal($blue)) {
             throw new InvalidArgument("Decimal (0-255) value was expected but [{$blue}] was given.");
+        }
+
+        if ($template) {
+            $this->template = $template;
         }
 
         $this->red = (int) $red;
@@ -84,13 +86,25 @@ class RGB implements Type, Converts
     }
 
     /**
+     * @return array
+     */
+    public function rgb()
+    {
+        return [
+            $this->red(),
+            $this->green(),
+            $this->blue(),
+        ];
+    }
+
+    /**
      * @param int $red
      *
      * @return static
      */
     public function withRed($red)
     {
-        return new static($red, $this->green, $this->blue);
+        return new static($red, $this->green(), $this->blue());
     }
 
     /**
@@ -100,7 +114,7 @@ class RGB implements Type, Converts
      */
     public function withGreen($green)
     {
-        return new static($this->red, $green, $this->blue);
+        return new static($this->red(), $green, $this->blue());
     }
 
     /**
@@ -110,7 +124,17 @@ class RGB implements Type, Converts
      */
     public function withBlue($blue)
     {
-        return new static($this->red, $this->green, $blue);
+        return new static($this->red(), $this->green(), $blue);
+    }
+
+    /**
+     * @param string $template
+     *
+     * @return static
+     */
+    public function withTemplate($template)
+    {
+        return new static($this->red(), $this->green(), $this->blue(), $template);
     }
 
     /**
@@ -120,11 +144,7 @@ class RGB implements Type, Converts
      */
     public function toHEX()
     {
-        return new HEX(join('', [
-            sprintf('%02x', $this->red),
-            sprintf('%02x', $this->green),
-            sprintf('%02x', $this->blue)
-        ]));
+        return new HEX(RGBtoHEX(...$this->rgb()));
     }
 
     /**
@@ -134,72 +154,17 @@ class RGB implements Type, Converts
      */
     public function toRGB()
     {
-        return clone $this;
+        return new RGB(...$this->rgb());
     }
 
     /**
      * Get color in HSL.
      *
-     * http://www.rapidtables.com/convert/color/rgb-to-hsl.htm
-     *
-     * 0 ≤ $red ≤ 1
-     * 0 ≤ $green ≤ 1
-     * 0 ≤ $blue ≤ 1
-     *
-     * $c = Chroma
-     *
      * @return HSL
      */
     public function toHSL()
     {
-        $red = $this->red / 255;
-        $green = $this->green / 255;
-        $blue = $this->blue / 255;
-
-        $min = min($red, $green, $blue);
-        $max = max($red, $green, $blue);
-        $c = $max - $min;
-
-        $lightness = ($max + $min) / 2;
-
-        if ($c == 0) {
-            $hue = 0;
-            $saturation = 0;
-        } else {
-            switch (true) {
-                case ($max === $red):
-                    $hue = (($green - $blue) / $c);
-                    break;
-                case ($max === $green):
-                    $hue = (($blue - $red) / $c) + 2;
-                    break;
-                case ($max === $blue):
-                    $hue = (($red - $green) / $c) + 4;
-                    break;
-            }
-
-            $hue *= 60;
-
-            if ($hue < 0) {
-                $hue += 360;
-            }
-
-
-            if ($lightness > 0.5) {
-                $saturation = $c / (2 - $max - $min);
-            } else {
-                $saturation = $c / ($max + $min);
-            }
-
-
-//            $saturation = $c / (1 - abs(2 * $lightness - 1));
-        }
-
-        $hue = round($hue, 0);
-        $saturation = round($saturation * 100, 0);
-        $lightness = round($lightness * 100, 0);
-
-        return new HSL($hue, $saturation, $lightness);
+        return new HSL(...RGBtoHSL(...$this->rgb()));
     }
 
     /**
@@ -209,7 +174,19 @@ class RGB implements Type, Converts
      */
     public function __toString()
     {
-        return "{$this->red},{$this->green},{$this->blue}";
+        return str_replace(
+            [
+                '{red}',
+                '{green}',
+                '{blue}',
+            ],
+            [
+                $this->red(),
+                $this->green(),
+                $this->blue(),
+            ],
+            $this->template
+        );
     }
 
     /**
