@@ -136,4 +136,48 @@ class HSLTest extends \PHPUnit_Framework_TestCase
             ['hex' => 'FF7565', 'rgb' => [255, 117, 101], 'hsl' => [6, 100, 70]],
         ];
     }
+
+    /** @test */
+    public function it_can_lighten_a_color()
+    {
+        $hsl = new HSL(0, 100, 25);
+
+        $hsl = $hsl->withTemplate('{hue}deg {saturation}pct {lightness}pct');
+        $hsl = $hsl->lighten(25);
+
+        assertThat((string) $hsl, is('0deg 100pct 50pct'));
+    }
+
+    /** @test */
+    public function it_limits_lightness_to_100_when_lighten()
+    {
+        $hsl = new HSL(0, 100, 90);
+
+        $hsl = $hsl->withTemplate('{hue}deg {saturation}pct {lightness}pct');
+        $hsl = $hsl->lighten(11);
+
+        assertThat((string) $hsl, is('0deg 100pct 100pct'));
+    }
+
+    /** @test */
+    public function it_can_darken_a_color()
+    {
+        $hsl = new HSL(0, 100, 50);
+
+        $hsl = $hsl->withTemplate('{hue}deg {saturation}pct {lightness}pct');
+        $hsl = $hsl->darken(25);
+
+        assertThat((string) $hsl, is('0deg 100pct 25pct'));
+    }
+
+    /** @test */
+    public function it_limits_lightness_to_0_when_darken()
+    {
+        $hsl = new HSL(0, 100, 10);
+
+        $hsl = $hsl->withTemplate('{hue}deg {saturation}pct {lightness}pct');
+        $hsl = $hsl->darken(11);
+
+        assertThat((string) $hsl, is('0deg 100pct 0pct'));
+    }
 }

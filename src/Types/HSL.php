@@ -105,7 +105,7 @@ class HSL implements Color
      */
     public function withHue($hue)
     {
-        return new static($hue, $this->saturation(), $this->lightness());
+        return new static($hue, $this->saturation(), $this->lightness(), $this->template);
     }
 
     /**
@@ -117,7 +117,7 @@ class HSL implements Color
      */
     public function withSaturation($saturation)
     {
-        return new static($this->hue(), $saturation, $this->lightness());
+        return new static($this->hue(), $saturation, $this->lightness(), $this->template);
     }
 
     /**
@@ -129,7 +129,7 @@ class HSL implements Color
      */
     public function withLightness($lightness)
     {
-        return new static($this->hue(), $this->saturation(), $lightness);
+        return new static($this->hue(), $this->saturation(), $lightness, $this->template);
     }
 
     /**
@@ -142,6 +142,36 @@ class HSL implements Color
     public function withTemplate($template)
     {
         return new static($this->hue(), $this->saturation(), $this->lightness(), $template);
+    }
+
+    /**
+     * Lighten the color.
+     *
+     * @param int $pct
+     *
+     * @return static
+     */
+    public function lighten($pct)
+    {
+        $lightness = $this->lightness() + $pct;
+        $lightness = $lightness > 100 ? 100 : $lightness;
+
+        return $this->withLightness($lightness);
+    }
+
+    /**
+     * Darken the color.
+     *
+     * @param int $pct
+     *
+     * @return static
+     */
+    public function darken($pct)
+    {
+        $lightness = $this->lightness() - $pct;
+        $lightness = $lightness < 0 ? 0 : $lightness;
+
+        return $this->withLightness($lightness);
     }
 
     /**

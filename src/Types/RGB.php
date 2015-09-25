@@ -105,7 +105,7 @@ class RGB implements Color
      */
     public function withRed($red)
     {
-        return new static($red, $this->green(), $this->blue());
+        return new static($red, $this->green(), $this->blue(), $this->template);
     }
 
     /**
@@ -117,7 +117,7 @@ class RGB implements Color
      */
     public function withGreen($green)
     {
-        return new static($this->red(), $green, $this->blue());
+        return new static($this->red(), $green, $this->blue(), $this->template);
     }
 
     /**
@@ -129,7 +129,7 @@ class RGB implements Color
      */
     public function withBlue($blue)
     {
-        return new static($this->red(), $this->green(), $blue);
+        return new static($this->red(), $this->green(), $blue, $this->template);
     }
 
     /**
