@@ -33,7 +33,9 @@ class Color
 
     /**
      * @param string $key
+     *
      * @return mixed
+     *
      * @throws \Exception
      */
     private function findTypeByKey($key)
@@ -48,8 +50,6 @@ class Color
             return $type;
         }
 
-        return $this->color->to(new $type);
+        return $this->color->to(new $type());
     }
-
-
 }

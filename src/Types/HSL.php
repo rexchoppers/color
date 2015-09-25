@@ -163,7 +163,7 @@ class HSL implements Type
      */
     public function toHSL()
     {
-        return clone $this;
+        return new self(...$this->hsl());
     }
 
     /**

@@ -23,18 +23,18 @@ function HEXtoRGB($code)
  * eg.
  * [255, 95, 71] => 'FF5F47'
  *
- * @param integer $red Decimal in range 0-255
- * @param integer $green Decimal in range 0-255
- * @param integer $blue Decimal in range 0-255
+ * @param int $red Decimal in range 0-255
+ * @param int $green Decimal in range 0-255
+ * @param int $blue Decimal in range 0-255
  *
  * @return string
  */
 function RGBtoHEX($red, $green, $blue)
 {
-    return join('', [
+    return implode('', [
         sprintf('%02x', $red),
         sprintf('%02x', $green),
-        sprintf('%02x', $blue)
+        sprintf('%02x', $blue),
     ]);
 }
 
@@ -150,6 +150,6 @@ function HSLtoRGB($hue, $saturation, $lightness)
     return [
         floor(($rgb[0] + $m) * 255),
         floor(($rgb[1] + $m) * 255),
-        floor(($rgb[2] + $m) * 255)
+        floor(($rgb[2] + $m) * 255),
     ];
 }

@@ -65,7 +65,7 @@ class HEX implements Type
      */
     public function toHEX()
     {
-        return new HEX($this->code());
+        return new self($this->code());
     }
 
     /**
@@ -124,6 +124,7 @@ class HEX implements Type
 
     /**
      * @param string $value
+     *
      * @return string
      */
     private function sanitize($value)

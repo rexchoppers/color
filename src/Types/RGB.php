@@ -153,7 +153,7 @@ class RGB implements Type
      */
     public function toRGB()
     {
-        return new RGB(...$this->rgb());
+        return new self(...$this->rgb());
     }
 
     /**
