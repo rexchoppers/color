@@ -127,7 +127,7 @@ function HSLtoRGB($hue, $saturation, $lightness)
     $m = $lightness - ($c / 2);
 
     switch (true) {
-        case ($hue < 60):
+        case ($hue < 60 || $hue === 360):
             $rgb = [$c, $x, 0];
             break;
         case ($hue < 120):
@@ -152,4 +152,50 @@ function HSLtoRGB($hue, $saturation, $lightness)
         floor(($rgb[1] + $m) * 255),
         floor(($rgb[2] + $m) * 255),
     ];
+}
+
+/**
+ * Get the mix between two hsl colors.
+ *
+ * http://go.pastie.org/1976031#79-96
+ *
+ * @param int $hue1 Degree in range 0-360
+ * @param int $saturation1 Percent in range 0-100
+ * @param int $lightness1 Percent in range 0-100
+ * @param int $hue2 Degree in range 0-360
+ * @param int $saturation2 Percent in range 0-100
+ * @param int $lightness2 Percent in range 0-100
+ *
+ * @return array [hue(0-360°), saturation(0-100%), lightness(0-100%)]
+ */
+function mixHSL($hue1, $saturation1, $lightness1, $hue2, $saturation2, $lightness2)
+{
+    $pi = pi();
+    $h1 = $hue1 / 360;
+    $s1 = $saturation1 / 100;
+    $l1 = $lightness1 / 100;
+    $h2 = $hue2 / 360;
+    $s2 = $saturation2 / 100;
+    $l2 = $lightness2 / 100;
+
+    $h = 0.0;
+    $s = 0.5 * ($s1 + $s2);
+    $l = 0.5 * ($l1 + $l2);
+    $x = cos(2.0 * $pi * $h1) + cos(2.0 * $pi * $h2);
+    $y = sin(2.0 * $pi * $h1) + sin(2.0 * $pi * $h2);
+    if ($x != 0.0 || $y != 0.0) {
+        $h = atan2($y, $x) / (2.0 * $pi);
+    } else {
+        $s = 0.0;
+    }
+
+    $h *= 360;
+    $s *= 100;
+    $l *= 100;
+
+    if ($h < 0) {
+        $h += 360;
+    }
+
+    return [$h, $s, $l];
 }

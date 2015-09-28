@@ -2,10 +2,11 @@
 
 namespace Color\Types;
 
-use function ConvertColor\HSLtoRGB;
-use function ConvertColor\RGBtoHEX;
 use Color\Color;
 use Color\Exceptions\InvalidArgument;
+use function ConvertColor\HSLtoRGB;
+use function ConvertColor\RGBtoHEX;
+use function ConvertColor\mixHSL;
 
 class HSL implements Color
 {
@@ -213,11 +214,14 @@ class HSL implements Color
      */
     public function mix(HSL $color)
     {
-        $hue = ($this->hue() + $color->hue()) / 2;
-        $saturation = ($this->saturation() + $color->saturation()) / 2;
-        $lightness = ($this->lightness() + $color->lightness()) / 2;
-
-        return new self($hue, $saturation, $lightness, $this->template);
+        return new self(...mixHSL(
+            $this->hue(),
+            $this->saturation(),
+            $this->lightness(),
+            $color->hue(),
+            $color->saturation(),
+            $color->lightness()
+        ));
     }
 
     /**
