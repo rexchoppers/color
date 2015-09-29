@@ -2,6 +2,7 @@
 
 namespace Tests\Color\Types;
 
+use Color\Types\C256;
 use Color\Types\HEX;
 use Color\Types\HSL;
 use Color\Types\RGB;
@@ -72,9 +73,23 @@ class RGBTest extends \PHPUnit_Framework_TestCase
     /** @test */
     public function it_casts_to_string()
     {
-        $rgb = new RGB(12, 34, 56);
+        $rgb = (new RGB(12, 34, 56))->withTemplate('{red},{green},{blue}');
 
         assertThat((string) $rgb, is('12,34,56'));
+    }
+
+    /**
+     * @test
+     * @dataProvider colorsDataset
+     */
+    public function it_can_convert_to_hex($hexData, $rgbData, $hslData, $c256Data)
+    {
+        $rgb = new RGB(...$rgbData);
+
+        $hex = $rgb->toHEX()->withTemplate('# {code}');
+
+        assertThat($hex, is(anInstanceOf(HEX::class)));
+        assertThat((string) $hex, is("# {$hexData}"));
     }
 
     /** @test */
@@ -93,21 +108,7 @@ class RGBTest extends \PHPUnit_Framework_TestCase
      * @test
      * @dataProvider colorsDataset
      */
-    public function it_can_convert_to_hex($hexData, $rgbData, $hslData)
-    {
-        $rgb = new RGB(...$rgbData);
-
-        $hex = $rgb->toHEX()->withTemplate('# {code}');
-
-        assertThat($hex, is(anInstanceOf(HEX::class)));
-        assertThat((string) $hex, is("# {$hexData}"));
-    }
-
-    /**
-     * @test
-     * @dataProvider colorsDataset
-     */
-    public function it_can_convert_to_hsl($hexData, $rgbData, $hslData)
+    public function it_can_convert_to_hsl($hexData, $rgbData, $hslData, $c256Data)
     {
         $rgb = new RGB(...$rgbData);
 
@@ -118,22 +119,36 @@ class RGBTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @test
+     * @dataProvider colorsDataset
+     */
+    public function it_can_convert_to_256($hexData, $rgbData, $hslData, $c256Data)
+    {
+        $rgb = new RGB(...$rgbData);
+
+        $c256 = $rgb->to256()->withTemplate(';{code}');
+
+        assertThat($c256, is(anInstanceOf(C256::class)));
+        assertThat((string) $c256, is(";{$c256Data}"));
+    }
+
+    /**
      * @return array
      */
     public function colorsDataset()
     {
         return [
-            ['hex' => '000000', 'rgb' => [0, 0, 0], 'hsl' => [0, 0, 0]],
-            ['hex' => 'FFFFFF', 'rgb' => [255, 255, 255], 'hsl' => [0, 0, 100]],
-            ['hex' => '7F7F7F', 'rgb' => [127, 127, 127], 'hsl' => [0, 0, 50]],
-            ['hex' => 'FF0000', 'rgb' => [255, 0, 0], 'hsl' => [0, 100, 50]],
-            ['hex' => '00FF00', 'rgb' => [0, 255, 0], 'hsl' => [120, 100, 50]],
-            ['hex' => '0000FF', 'rgb' => [0, 0, 255], 'hsl' => [240, 100, 50]],
-            ['hex' => '00FFFF', 'rgb' => [0, 255, 255], 'hsl' => [180, 100, 50]],
-            ['hex' => 'FF00FF', 'rgb' => [255, 0, 255], 'hsl' => [300, 100, 50]],
-            ['hex' => 'FFFF00', 'rgb' => [255, 255, 0], 'hsl' => [60, 100, 50]],
-            ['hex' => 'FF5F47', 'rgb' => [255, 95, 71], 'hsl' => [8, 100, 64]],
-            ['hex' => 'FF7565', 'rgb' => [255, 117, 101], 'hsl' => [6, 100, 70]],
+            ['hex' => '000000', 'rgb' => [0, 0, 0], 'hsl' => [0, 0, 0], 'c256' => 232],
+            ['hex' => 'FFFFFF', 'rgb' => [255, 255, 255], 'hsl' => [0, 0, 100], 'c256' => 255],
+            ['hex' => '7F7F7F', 'rgb' => [127, 127, 127], 'hsl' => [0, 0, 50], 'c256' => 243],
+            ['hex' => 'FF0000', 'rgb' => [255, 0, 0], 'hsl' => [0, 100, 50], 'c256' => 196],
+            ['hex' => '00FF00', 'rgb' => [0, 255, 0], 'hsl' => [120, 100, 50], 'c256' => 46],
+            ['hex' => '0000FF', 'rgb' => [0, 0, 255], 'hsl' => [240, 100, 50], 'c256' => 21],
+            ['hex' => '00FFFF', 'rgb' => [0, 255, 255], 'hsl' => [180, 100, 50], 'c256' => 51],
+            ['hex' => 'FF00FF', 'rgb' => [255, 0, 255], 'hsl' => [300, 100, 50], 'c256' => 201],
+            ['hex' => 'FFFF00', 'rgb' => [255, 255, 0], 'hsl' => [60, 100, 50], 'c256' => 226],
+            ['hex' => 'FF5F47', 'rgb' => [255, 95, 71], 'hsl' => [8, 100, 64], 'c256' => 209],
+            ['hex' => 'FF7565', 'rgb' => [255, 117, 101], 'hsl' => [6, 100, 70], 'c256' => 212],
         ];
     }
 }

@@ -44,4 +44,11 @@ interface Color
      * @return HSL
      */
     public function toHSL();
+
+    /**
+     * Get color in 256.
+     *
+     * @return C256
+     */
+    public function to256();
 }

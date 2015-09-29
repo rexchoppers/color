@@ -5,6 +5,7 @@ namespace Color\Types;
 use Color\Color;
 use Color\Exceptions\InvalidArgument;
 use function ConvertColor\HSLtoRGB;
+use function ConvertColor\RGBtoC256;
 use function ConvertColor\RGBtoHEX;
 use function ConvertColor\mixHSL;
 
@@ -252,6 +253,16 @@ class HSL implements Color
     public function toHSL()
     {
         return new self(...$this->hsl());
+    }
+
+    /**
+     * Get color in 256.
+     *
+     * @return C256
+     */
+    public function to256()
+    {
+        return new C256(RGBtoC256(...HSLtoRGB(...$this->hsl())));
     }
 
     /**

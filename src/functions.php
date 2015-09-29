@@ -199,3 +199,47 @@ function mixHSL($hue1, $saturation1, $lightness1, $hue2, $saturation2, $lightnes
 
     return [$h, $s, $l];
 }
+
+/**
+ * Converts a color from rgb to 256.
+ *
+ * https://en.wikipedia.org/wiki/ANSI_escape_code#Colors
+ *
+ * In 256-color mode (ESC[38;5;<fgcode>m and ESC[48;5;<bgcode>m), the color-codes are the following:
+ * 0x00-0x07:  standard colors (as in ESC [ 30–37 m)
+ * 0x08-0x0F:  high intensity colors (as in ESC [ 90–97 m)
+ * 0x10-0xE7:  6 × 6 × 6 = 216 colors: 16 + 36 × r + 6 × g + b (0 ≤ r, g, b ≤ 5)
+ * 0xE8-0xFF:  grayscale from black to white in 24 steps
+ *
+ * @param int $red Decimal in range 0-255
+ * @param int $green Decimal in range 0-255
+ * @param int $blue Decimal in range 0-255
+ *
+ * @return int color(0-255)
+ */
+function RGBtoC256($red, $green, $blue)
+{
+    if ($red === $green && $green === $blue) {
+        return round(232 + $red * 23 / 255);
+    } else {
+        return round(
+            16
+            + (($red * 5 / 255) * 36)
+            + (($green * 5 / 255) * 6)
+            + ($blue * 5 / 255)
+        );
+    }
+}
+function C256toRGB($code)
+{
+    if ($red === $green && $green === $blue) {
+        return round(232 + $red * 23 / 255);
+    } else {
+        return round(
+            16
+            + (($red * 5 / 255) * 36)
+            + (($green * 5 / 255) * 6)
+            + ($blue * 5 / 255)
+        );
+    }
+}

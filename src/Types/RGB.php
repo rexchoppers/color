@@ -2,6 +2,7 @@
 
 namespace Color\Types;
 
+use function ConvertColor\RGBtoC256;
 use function ConvertColor\RGBtoHEX;
 use function ConvertColor\RGBtoHSL;
 use Color\Color;
@@ -172,6 +173,16 @@ class RGB implements Color
     public function toHSL()
     {
         return new HSL(...RGBtoHSL(...$this->rgb()));
+    }
+
+    /**
+     * Get color in 256.
+     *
+     * @return C256
+     */
+    public function to256()
+    {
+        return new C256(RGBtoC256(...$this->rgb()));
     }
 
     /**

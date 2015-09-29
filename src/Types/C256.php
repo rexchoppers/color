@@ -3,46 +3,45 @@
 namespace Color\Types;
 
 use function ConvertColor\HEXtoRGB;
-use function ConvertColor\RGBtoC256;
 use function ConvertColor\RGBtoHSL;
 use Color\Color;
 use Color\Exceptions\InvalidArgument;
 
-class HEX implements Color
+class C256 implements Color
 {
     /**
-     * @var string (000000-FFFFFF)
+     * @var int (0-255)
      */
     private $code;
 
     /**
      * @var string
      */
-    private $template = '#{code}';
+    private $template = '{code}';
 
     /**
-     * Hex constructor.
+     * C256 constructor.
      *
-     * @param string $code
+     * @param int $code
      * @param null|string $template
      *
      * @throws InvalidArgument
      */
-    public function __construct($code = '000000', $template = null)
+    public function __construct($code = 232, $template = null)
     {
-        if ( ! $this->isHexColor($code)) {
-            throw new InvalidArgument("Hex value was expected but [{$code}] was given.");
+        if ( ! $this->isDecimal($code)) {
+            throw new InvalidArgument("Decimal (0-255) value was expected but [{$code}] was given.");
         }
 
         if ($template) {
             $this->template = $template;
         }
 
-        $this->code = $this->sanitize($code);
+        $this->code = (int) $code;
     }
 
     /**
-     * @return string
+     * @return int
      */
     public function code()
     {
@@ -68,7 +67,7 @@ class HEX implements Color
      */
     public function toHEX()
     {
-        return new self($this->code());
+        throw new \Exception('Can\'t convert from 256 color yet.');
     }
 
     /**
@@ -78,7 +77,7 @@ class HEX implements Color
      */
     public function toRGB()
     {
-        return new RGB(...HEXtoRGB($this->code()));
+        throw new \Exception('Can\'t convert from 256 color yet.');
     }
 
     /**
@@ -88,7 +87,7 @@ class HEX implements Color
      */
     public function toHSL()
     {
-        return new HSL(...RGBtoHSL(...HEXtoRGB($this->code())));
+        throw new \Exception('Can\'t convert from 256 color yet.');
     }
 
     /**
@@ -98,7 +97,7 @@ class HEX implements Color
      */
     public function to256()
     {
-        return new C256(RGBtoC256(...HEXtoRGB($this->code())));
+        throw new \Exception('Can\'t convert from 256 color yet.');
     }
 
     /**
@@ -120,36 +119,16 @@ class HEX implements Color
     }
 
     /**
-     * @param string $value
+     * @param int $value
      *
      * @return bool
      */
-    private function isHexColor($value)
+    private function isDecimal($value)
     {
-        $value = ltrim((string) $value, '#');
-
-        if (ctype_xdigit($value) && (strlen($value) == 6 || strlen($value) == 3)) {
+        if ($value >= 0 && $value <= 255) {
             return true;
         }
 
         return false;
-    }
-
-    /**
-     * @param string $value
-     *
-     * @return string
-     */
-    private function sanitize($value)
-    {
-        $value = (string) $value;
-        $value = ltrim($value, '#');
-        $value = strtoupper($value);
-
-        if (strlen($value) === 3) {
-            $value = $value[0] . $value[0] . $value[1] . $value[1] . $value[2] . $value[2];
-        }
-
-        return $value;
     }
 }
