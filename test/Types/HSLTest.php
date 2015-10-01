@@ -73,7 +73,7 @@ class HSLTest extends \PHPUnit_Framework_TestCase
     /** @test */
     public function it_casts_to_string()
     {
-        $hsl = (new HSL(0, 100, 50))->withTemplate('{hue}° {saturation}% {lightness}%');
+        $hsl = new HSL(0, 100, 50);
 
         assertThat((string) $hsl, is('0° 100% 50%'));
     }

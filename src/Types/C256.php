@@ -2,7 +2,9 @@
 
 namespace Color\Types;
 
+use function ConvertColor\C256toRGB;
 use function ConvertColor\HEXtoRGB;
+use function ConvertColor\RGBtoHEX;
 use function ConvertColor\RGBtoHSL;
 use Color\Color;
 use Color\Exceptions\InvalidArgument;
@@ -67,7 +69,7 @@ class C256 implements Color
      */
     public function toHEX()
     {
-        throw new \Exception('Can\'t convert from 256 color yet.');
+        return new HEX(RGBtoHEX(...C256toRGB($this->code())));
     }
 
     /**
@@ -77,7 +79,7 @@ class C256 implements Color
      */
     public function toRGB()
     {
-        throw new \Exception('Can\'t convert from 256 color yet.');
+        return new RGB(...C256toRGB($this->code()));
     }
 
     /**
@@ -87,7 +89,7 @@ class C256 implements Color
      */
     public function toHSL()
     {
-        throw new \Exception('Can\'t convert from 256 color yet.');
+        return new HSL(...RGBtoHSL(...C256toRGB($this->code())));
     }
 
     /**
@@ -97,7 +99,7 @@ class C256 implements Color
      */
     public function to256()
     {
-        throw new \Exception('Can\'t convert from 256 color yet.');
+        return new self($this->code());
     }
 
     /**

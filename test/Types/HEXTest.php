@@ -85,7 +85,7 @@ class HEXTest extends \PHPUnit_Framework_TestCase
     /** @test */
     public function it_casts_to_string()
     {
-        $hex = (new HEX('ABCDEF'))->withTemplate('#{code}');
+        $hex = new HEX('ABCDEF');
 
         assertThat((string) $hex, is('#ABCDEF'));
     }

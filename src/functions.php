@@ -205,11 +205,10 @@ function mixHSL($hue1, $saturation1, $lightness1, $hue2, $saturation2, $lightnes
  *
  * https://en.wikipedia.org/wiki/ANSI_escape_code#Colors
  *
- * In 256-color mode (ESC[38;5;<fgcode>m and ESC[48;5;<bgcode>m), the color-codes are the following:
- * 0x00-0x07:  standard colors (as in ESC [ 30–37 m)
- * 0x08-0x0F:  high intensity colors (as in ESC [ 90–97 m)
- * 0x10-0xE7:  6 × 6 × 6 = 216 colors: 16 + 36 × r + 6 × g + b (0 ≤ r, g, b ≤ 5)
- * 0xE8-0xFF:  grayscale from black to white in 24 steps
+ * 0-7:     standard colors
+ * 8-15:    high intensity colors
+ * 16-231:  6 × 6 × 6 = 216 colors: 16 + 36 × r + 6 × g + b (0 ≤ r, g, b ≤ 5)
+ * 232-255: grayscale from black to white in 24 steps
  *
  * @param int $red Decimal in range 0-255
  * @param int $green Decimal in range 0-255
@@ -230,16 +229,60 @@ function RGBtoC256($red, $green, $blue)
         );
     }
 }
+
+/**
+ * Converts a color from 256 to rgb.
+ *
+ * https://en.wikipedia.org/wiki/ANSI_escape_code#Colors
+ *
+ * 0-7:     standard colors
+ * 8-15:    high intensity colors
+ * 16-231:  6 × 6 × 6 = 216 colors: 16 + 36 × r + 6 × g + b (0 ≤ r, g, b ≤ 5)
+ * 232-255: grayscale from black to white in 24 steps
+ *
+ * @param int $code Decimal in range 0-255
+ *
+ * @return int [red(0-255), green(0-255), blue(0-255)]
+ */
 function C256toRGB($code)
 {
-    if ($red === $green && $green === $blue) {
-        return round(232 + $red * 23 / 255);
-    } else {
-        return round(
-            16
-            + (($red * 5 / 255) * 36)
-            + (($green * 5 / 255) * 6)
-            + ($blue * 5 / 255)
-        );
+    // Primary and bright colors
+    if ($code == 7) {
+        return [192,192,192];
+    }
+    if ($code == 8) {
+        return [128,128,128];
+    }
+    if ($code >= 0 && 15 >= $code) {
+        $value = ($code <= 7) ? 128 : 255;
+        $code = ($code <= 7) ? $code : $code - 8;
+
+        $binary = str_pad(decbin($code), 3, '0', STR_PAD_LEFT);
+        list($blue, $green, $red) = str_split($binary, 1);
+
+        return [$red * $value, $green * $value, $blue * $value];
+    }
+
+    // Colors
+    if ($code >= 16 && 231 >= $code) {
+        $steps = [0, 95, 135, 175, 215, 255];
+        $start = 16;
+        $index = $code - $start;
+
+        $red = (int) floor($index / 6 / 6);
+        $green = (int) floor($index / 6 % 6);
+        $blue = (int) floor($index % 6);
+
+        return [$steps[$red], $steps[$green], $steps[$blue]];
+    }
+
+    // Grayscale
+    if ($code >= 232 && 255 >= $code) {
+        $start = 232;
+        $index = $code - $start;
+
+        $color = 8 + $index * 10;
+
+        return [$color, $color, $color];
     }
 }

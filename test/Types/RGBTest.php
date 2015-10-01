@@ -73,7 +73,7 @@ class RGBTest extends \PHPUnit_Framework_TestCase
     /** @test */
     public function it_casts_to_string()
     {
-        $rgb = (new RGB(12, 34, 56))->withTemplate('{red},{green},{blue}');
+        $rgb = new RGB(12, 34, 56);
 
         assertThat((string) $rgb, is('12,34,56'));
     }
