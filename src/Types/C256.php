@@ -3,7 +3,6 @@
 namespace Color\Types;
 
 use function ConvertColor\C256toRGB;
-use function ConvertColor\HEXtoRGB;
 use function ConvertColor\RGBtoHEX;
 use function ConvertColor\RGBtoHSL;
 use Color\Color;
