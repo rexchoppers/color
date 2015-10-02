@@ -2,11 +2,11 @@
 
 namespace Color\Types;
 
-use function ConvertColor\RGBtoC256;
-use function ConvertColor\RGBtoHEX;
-use function ConvertColor\RGBtoHSL;
 use Color\Color;
 use Color\Exceptions\InvalidArgument;
+use function Color\Helpers\RGBtoC256;
+use function Color\Helpers\RGBtoHEX;
+use function Color\Helpers\RGBtoHSL;
 
 class RGB implements Color
 {

@@ -2,9 +2,9 @@
 
 namespace Color\Types;
 
-use function ConvertColor\C256toRGB;
-use function ConvertColor\RGBtoHEX;
-use function ConvertColor\RGBtoHSL;
+use function Color\Helpers\C256toRGB;
+use function Color\Helpers\RGBtoHEX;
+use function Color\Helpers\RGBtoHSL;
 use Color\Color;
 use Color\Exceptions\InvalidArgument;
 

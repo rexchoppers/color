@@ -4,10 +4,10 @@ namespace Color\Types;
 
 use Color\Color;
 use Color\Exceptions\InvalidArgument;
-use function ConvertColor\HSLtoRGB;
-use function ConvertColor\RGBtoC256;
-use function ConvertColor\RGBtoHEX;
-use function ConvertColor\mixHSL;
+use function Color\Helpers\HSLtoRGB;
+use function Color\Helpers\RGBtoC256;
+use function Color\Helpers\RGBtoHEX;
+use function Color\Helpers\mixHSL;
 
 class HSL implements Color
 {

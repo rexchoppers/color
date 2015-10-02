@@ -9,7 +9,8 @@
     "require": {},
     "require-dev": {
         "phpunit/phpunit": "4.8.*",
-        "hamcrest/hamcrest-php": "1.2.*"
+        "hamcrest/hamcrest-php": "1.2.*",
+        "fabpot/php-cs-fixer": "^1.10"
     },
     "autoload": {
         "files": [
@@ -23,5 +24,9 @@
         "psr-4": {
             "Tests\\Color\\": "test/"
         }
+    },
+    "scripts": {
+        "test": "phpunit",
+        "fix": "php-cs-fixer fix"
     }
 }

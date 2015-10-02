@@ -2,7 +2,7 @@
 
 namespace Tests\ConvertColor;
 
-use function ConvertColor\C256toRGB;
+use function Color\Helpers\C256toRGB;
 
 class functionsTest extends \PHPUnit_Framework_TestCase
 {
