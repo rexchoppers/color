@@ -218,14 +218,25 @@ function mixHSL($hue1, $saturation1, $lightness1, $hue2, $saturation2, $lightnes
  */
 function RGBtoC256($red, $green, $blue)
 {
-    if ($red === $green && $green === $blue) {
+    $steps = [0, 95, 135, 175, 215, 255];
+
+    if ($red === $green && $green === $blue && !in_array($red, $steps)) {
         return round(232 + $red * 23 / 255);
     } else {
-        return round(
+        $closest = function ($find, $values) {
+            $distances = array();
+            foreach($values as $key => $num) {
+                $distances[$key] = abs($find - $num);
+            }
+
+            return array_search(min($distances), $distances);
+        };
+
+        return (int) round(
             16
-            + (($red * 5 / 255) * 36)
-            + (($green * 5 / 255) * 6)
-            + ($blue * 5 / 255)
+            + ($closest($red, $steps) * 36)
+            + ($closest($green, $steps) * 6)
+            + $closest($blue, $steps)
         );
     }
 }

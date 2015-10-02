@@ -4,11 +4,12 @@ namespace Tests\ConvertColor;
 
 use function Color\Helpers\C256toRGB;
 use function Color\Helpers\HSLtoRGB;
+use function Color\Helpers\RGBtoC256;
 
 class functionsTest extends \PHPUnit_Framework_TestCase
 {
     /** @test */
-    public function HSLtoRGB_primary()
+    public function HSLtoRGB()
     {
         assertThat(HSLtoRGB(0, 0, 0), is([0, 0, 0]));
         assertThat(HSLtoRGB(0, 0, 100), is([255, 255, 255]));
@@ -24,6 +25,24 @@ class functionsTest extends \PHPUnit_Framework_TestCase
         assertThat(HSLtoRGB(0, 100, 2), is([10, 0, 0]));
         assertThat(HSLtoRGB(0, 100, 3), is([15, 0, 0]));
         assertThat(HSLtoRGB(0, 100, 4), is([20, 0, 0]));
+    }
+
+    /** @test */
+    public function RGBtoC256()
+    {
+        assertThat(RGBtoC256(0, 0, 0), is(16));
+        assertThat(RGBtoC256(95, 95, 95), is(59));
+        assertThat(RGBtoC256(135, 135, 135), is(102));
+        assertThat(RGBtoC256(175, 175, 175), is(145));
+        assertThat(RGBtoC256(215, 215, 215), is(188));
+        assertThat(RGBtoC256(255, 255, 255), is(231));
+
+        assertThat(RGBtoC256(255, 0, 0), is(196));
+        assertThat(RGBtoC256(0, 255, 0), is(46));
+        assertThat(RGBtoC256(0, 0, 255), is(21));
+        assertThat(RGBtoC256(255, 255, 0), is(226));
+        assertThat(RGBtoC256(0, 255, 255), is(51));
+        assertThat(RGBtoC256(255, 0, 255), is(201));
     }
 
     /** @test */
