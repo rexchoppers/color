@@ -93,9 +93,9 @@ function RGBtoHSL($red, $green, $blue)
     }
 
     return [
-        round($hue, 0),
-        round($saturation * 100, 0),
-        round($lightness * 100, 0),
+        (int) round($hue, 0),
+        (int) round($saturation * 100, 0),
+        (int) round($lightness * 100, 0),
     ];
 }
 
@@ -148,9 +148,9 @@ function HSLtoRGB($hue, $saturation, $lightness)
     }
 
     return [
-        floor(($rgb[0] + $m) * 255),
-        floor(($rgb[1] + $m) * 255),
-        floor(($rgb[2] + $m) * 255),
+        (int) round(($rgb[0] + $m) * 255),
+        (int) round(($rgb[1] + $m) * 255),
+        (int) round(($rgb[2] + $m) * 255),
     ];
 }
 

@@ -3,9 +3,29 @@
 namespace Tests\ConvertColor;
 
 use function Color\Helpers\C256toRGB;
+use function Color\Helpers\HSLtoRGB;
 
 class functionsTest extends \PHPUnit_Framework_TestCase
 {
+    /** @test */
+    public function HSLtoRGB_primary()
+    {
+        assertThat(HSLtoRGB(0, 0, 0), is([0, 0, 0]));
+        assertThat(HSLtoRGB(0, 0, 100), is([255, 255, 255]));
+        assertThat(HSLtoRGB(0, 0, 50), is([128, 128, 128]));
+        assertThat(HSLtoRGB(0, 100, 50), is([255, 0, 0]));
+        assertThat(HSLtoRGB(60, 100, 50), is([255, 255, 0]));
+        assertThat(HSLtoRGB(120, 100, 50), is([0, 255, 0]));
+        assertThat(HSLtoRGB(180, 100, 50), is([0, 255, 255]));
+        assertThat(HSLtoRGB(240, 100, 50), is([0, 0, 255]));
+        assertThat(HSLtoRGB(300, 100, 50), is([255, 0, 255]));
+
+        assertThat(HSLtoRGB(0, 100, 1), is([5, 0, 0]));
+        assertThat(HSLtoRGB(0, 100, 2), is([10, 0, 0]));
+        assertThat(HSLtoRGB(0, 100, 3), is([15, 0, 0]));
+        assertThat(HSLtoRGB(0, 100, 4), is([20, 0, 0]));
+    }
+
     /** @test */
     public function C256toRGB_primary()
     {
