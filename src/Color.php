@@ -1,10 +1,10 @@
 <?php
 
-namespace Color;
+namespace Scriptura\Color;
 
-use Color\Types\HEX;
-use Color\Types\HSL;
-use Color\Types\RGB;
+use Scriptura\Color\Types\HEX;
+use Scriptura\Color\Types\HSL;
+use Scriptura\Color\Types\RGB;
 
 interface Color
 {

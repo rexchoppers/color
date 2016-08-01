@@ -1,12 +1,12 @@
 <?php
 
-namespace Tests\Color\Types;
+namespace Scriptura\Color\Tests\Types;
 
-use Color\Exceptions\InvalidArgument;
-use Color\Types\C256;
-use Color\Types\HEX;
-use Color\Types\HSL;
-use Color\Types\RGB;
+use Scriptura\Color\Exceptions\InvalidArgument;
+use Scriptura\Color\Types\C256;
+use Scriptura\Color\Types\HEX;
+use Scriptura\Color\Types\HSL;
+use Scriptura\Color\Types\RGB;
 
 class HSLTest extends \PHPUnit_Framework_TestCase
 {

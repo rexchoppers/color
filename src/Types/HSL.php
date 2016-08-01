@@ -1,13 +1,13 @@
 <?php
 
-namespace Color\Types;
+namespace Scriptura\Color\Types;
 
-use Color\Color;
-use Color\Exceptions\InvalidArgument;
-use function Color\Helpers\HSLtoRGB;
-use function Color\Helpers\RGBtoC256;
-use function Color\Helpers\RGBtoHEX;
-use function Color\Helpers\mixHSL;
+use Scriptura\Color\Color;
+use Scriptura\Color\Exceptions\InvalidArgument;
+use function Scriptura\Color\Helpers\HSLtoRGB;
+use function Scriptura\Color\Helpers\RGBtoC256;
+use function Scriptura\Color\Helpers\RGBtoHEX;
+use function Scriptura\Color\Helpers\mixHSL;
 
 class HSL implements Color
 {

@@ -1,12 +1,12 @@
 <?php
 
-namespace Color\Types;
+namespace Scriptura\Color\Types;
 
-use Color\Color;
-use Color\Exceptions\InvalidArgument;
-use function Color\Helpers\RGBtoC256;
-use function Color\Helpers\RGBtoHEX;
-use function Color\Helpers\RGBtoHSL;
+use Scriptura\Color\Color;
+use Scriptura\Color\Exceptions\InvalidArgument;
+use function Scriptura\Color\Helpers\RGBtoC256;
+use function Scriptura\Color\Helpers\RGBtoHEX;
+use function Scriptura\Color\Helpers\RGBtoHSL;
 
 class RGB implements Color
 {

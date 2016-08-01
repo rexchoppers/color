@@ -1,6 +1,6 @@
 <?php
 
-namespace Color\Helpers;
+namespace Scriptura\Color\Helpers;
 
 /**
  * Converts a color from hex to rgb.

@@ -5,22 +5,22 @@ Color is a package to convert between color types.
 Via Composer
 
 ``` bash
-$ composer require xxx
+$ composer require scripturadesign/color
 ```
 
 ## Usage
 ### HEX
 ``` php
-$hex = new \Color\Types\HEX('ff0000'); // New HEX color
-$hex = new \Color\Types\HEX('ff0000', '#{code}'); // New HEX color with template
+$hex = new \Scriptura\Color\Types\HEX('ff0000'); // New HEX color
+$hex = new \Scriptura\Color\Types\HEX('ff0000', '#{code}'); // New HEX color with template
 echo $hex->code(); // 'FF0000'
 echo $hex; // '#FF0000'
 echo $hex->withTemplate('color: #{code};'); // 'color: #FF0000;'
 
-$hex  = $hex->toHEX(); // Convert the color to \Color\Types\HEX
-$rgb  = $hex->toRGB(); // Convert the color to \Color\Types\RGB
-$hsl  = $hex->toHSL(); // Convert the color to \Color\Types\HSL
-$c256 = $hex->to256(); // Convert the color to \Color\Types\C256
+$hex  = $hex->toHEX(); // Convert the color to \Scriptura\Color\Types\HEX
+$rgb  = $hex->toRGB(); // Convert the color to \Scriptura\Color\Types\RGB
+$hsl  = $hex->toHSL(); // Convert the color to \Scriptura\Color\Types\HSL
+$c256 = $hex->to256(); // Convert the color to \Scriptura\Color\Types\C256
 ```
 
 #### Default template
@@ -41,8 +41,8 @@ Example:
 
 ### RGB
 ``` php
-$rgb = new \Color\Types\RGB(255, 0, 0); // New RGB color
-$rgb = new \Color\Types\RGB(255, 0, 0, '{red},{green},{blue}'); // New RGB color with template
+$rgb = new \Scriptura\Color\Types\RGB(255, 0, 0); // New RGB color
+$rgb = new \Scriptura\Color\Types\RGB(255, 0, 0, '{red},{green},{blue}'); // New RGB color with template
 echo $rgb->red(); // 255
 echo $rgb->green(); // 0
 echo $rgb->blue(); // 0
@@ -54,10 +54,10 @@ $rgb = $rgb->withRed(0); // New instance with red set to 0
 $rgb = $rgb->withGreen(255); // New instance with green set to 255
 $rgb = $rgb->withBlue(255); // New instance with blue set to 255
 
-$hex  = $rgb->toHEX(); // Convert the color to \Color\Types\HEX
-$rgb  = $rgb->toRGB(); // Convert the color to \Color\Types\RGB
-$hsl  = $rgb->toHSL(); // Convert the color to \Color\Types\HSL
-$c256 = $rgb->to256(); // Convert the color to \Color\Types\C256
+$hex  = $rgb->toHEX(); // Convert the color to \Scriptura\Color\Types\HEX
+$rgb  = $rgb->toRGB(); // Convert the color to \Scriptura\Color\Types\RGB
+$hsl  = $rgb->toHSL(); // Convert the color to \Scriptura\Color\Types\HSL
+$c256 = $rgb->to256(); // Convert the color to \Scriptura\Color\Types\C256
 ```
 
 #### Default template
@@ -65,8 +65,8 @@ $c256 = $rgb->to256(); // Convert the color to \Color\Types\C256
 
 ### HSL
 ``` php
-$hsl = new \Color\Types\HSL(0, 100, 50); // New HSL color
-$hsl = new \Color\Types\HSL(0, 100, 50, '{hue}° {saturation}% {lightness}%'); // New HSL color with template
+$hsl = new \Scriptura\Color\Types\HSL(0, 100, 50); // New HSL color
+$hsl = new \Scriptura\Color\Types\HSL(0, 100, 50, '{hue}° {saturation}% {lightness}%'); // New HSL color with template
 echo $hsl->hue(); // 0
 echo $hsl->saturation(); // 100
 echo $hsl->lightness(); // 50
@@ -78,10 +78,10 @@ $hsl = $hsl->withHue(180); // New instance with hue set to 180
 $hsl = $hsl->withSaturation(50); // New instance with saturation set to 50
 $hsl = $hsl->withLightness(25); // New instance with lightness set to 25
 
-$hex  = $hsl->toHEX(); // Convert the color to \Color\Types\HEX
-$rgb  = $hsl->toRGB(); // Convert the color to \Color\Types\RGB
-$hsl  = $hsl->toHSL(); // Convert the color to \Color\Types\HSL
-$c256 = $hsl->to256(); // Convert the color to \Color\Types\C256
+$hex  = $hsl->toHEX(); // Convert the color to \Scriptura\Color\Types\HEX
+$rgb  = $hsl->toRGB(); // Convert the color to \Scriptura\Color\Types\RGB
+$hsl  = $hsl->toHSL(); // Convert the color to \Scriptura\Color\Types\HSL
+$c256 = $hsl->to256(); // Convert the color to \Scriptura\Color\Types\C256
 
 $hsl = $hsl->lighten(10); // New instance that is lightened by 10%
 $hsl = $hsl->darken(10); // New instance that is darkened by 10%
@@ -89,7 +89,7 @@ $hsl = $hsl->darken(10); // New instance that is darkened by 10%
 $hsl = $hsl->saturate(10); // New instance that is saturated by 10%
 $hsl = $hsl->desaturate(10); // New instance that is desaturated by 10%
 
-$mix = $hsl->mix(new \Color\Types\HSL(120, 100, 50)); // Get a new color that is a mix between two colors
+$mix = $hsl->mix(new \Scriptura\Color\Types\HSL(120, 100, 50)); // Get a new color that is a mix between two colors
 ```
 
 #### Default template
@@ -97,16 +97,16 @@ $mix = $hsl->mix(new \Color\Types\HSL(120, 100, 50)); // Get a new color that is
 
 ### 256
 ``` php
-$c256 = new \Color\Types\C256(196); // New 256 color
-$c256 = new \Color\Types\C256(196, '{code}'); // New 256 color with template
+$c256 = new \Scriptura\Color\Types\C256(196); // New 256 color
+$c256 = new \Scriptura\Color\Types\C256(196, '{code}'); // New 256 color with template
 echo $c256->code(); // 196
 echo $c256; // '196'
 echo $c256->withTemplate('\e[48;{code}m'); // '\e[48;196m'
 
-$hex  = $c256->toHEX(); // Convert the color to \Color\Types\HEX
-$rgb  = $c256->toRGB(); // Convert the color to \Color\Types\RGB
-$hsl  = $c256->toHSL(); // Convert the color to \Color\Types\HSL
-$c256 = $c256->to256(); // Convert the color to \Color\Types\C256
+$hex  = $c256->toHEX(); // Convert the color to \Scriptura\Color\Types\HEX
+$rgb  = $c256->toRGB(); // Convert the color to \Scriptura\Color\Types\RGB
+$hsl  = $c256->toHSL(); // Convert the color to \Scriptura\Color\Types\HSL
+$c256 = $c256->to256(); // Convert the color to \Scriptura\Color\Types\C256
 ```
 
 #### Default template

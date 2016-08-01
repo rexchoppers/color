@@ -3,8 +3,8 @@
 require_once 'vendor/autoload.php';
 
 echo "\n##### HEX ('ff0000') #####\n";
-$hex = new \Color\Types\HEX('ff0000');
-$hex = new \Color\Types\HEX('ff0000', '#{code}');
+$hex = new \Scriptura\Color\Types\HEX('ff0000');
+$hex = new \Scriptura\Color\Types\HEX('ff0000', '#{code}');
 echo "Code:           " . $hex->code() . "\n";
 echo "(string):       " . $hex . "\n";
 echo "Template:       " . $hex->withTemplate('color: #{code};') . "\n";
@@ -16,8 +16,8 @@ echo "to256:          " . $hex->to256() . "\n";
 
 
 echo "\n##### RGB (255, 0, 0) #####\n";
-$rgb = new \Color\Types\RGB(255, 0, 0);
-$rgb = new \Color\Types\RGB(255, 0, 0, '{red},{green},{blue}');
+$rgb = new \Scriptura\Color\Types\RGB(255, 0, 0);
+$rgb = new \Scriptura\Color\Types\RGB(255, 0, 0, '{red},{green},{blue}');
 echo "Red:            " . $rgb->red() . "\n";
 echo "Green:          " . $rgb->green() . "\n";
 echo "Blue:           " . $rgb->blue() . "\n";
@@ -36,8 +36,8 @@ echo "to256:          " . $rgb->to256() . "\n";
 
 
 echo "\n##### HSL (0, 100, 50) #####\n";
-$hsl = new \Color\Types\HSL(0, 100, 50);
-$hsl = new \Color\Types\HSL(0, 100, 50, '{hue}° {saturation}% {lightness}%');
+$hsl = new \Scriptura\Color\Types\HSL(0, 100, 50);
+$hsl = new \Scriptura\Color\Types\HSL(0, 100, 50, '{hue}° {saturation}% {lightness}%');
 echo "Hue:            " . $hsl->hue() . "\n";
 echo "Saturation:     " . $hsl->saturation() . "\n";
 echo "Lightness:      " . $hsl->lightness() . "\n";
@@ -60,12 +60,12 @@ echo "Darken:         " . $hsl->darken(10) . "\n";
 echo "Saturate:       " . $hsl->saturate(10) . "\n";
 echo "Desaturate:     " . $hsl->desaturate(10) . "\n";
 
-echo "Mix:            " . $mix = $hsl->mix(new \Color\Types\HSL(120, 25, 25)) . "\n";
+echo "Mix:            " . $mix = $hsl->mix(new \Scriptura\Color\Types\HSL(120, 25, 25)) . "\n";
 
 
 echo "\n##### 256 (196) #####\n";
-$c256 = new \Color\Types\C256(196);
-$c256 = new \Color\Types\C256(196, '{code}');
+$c256 = new \Scriptura\Color\Types\C256(196);
+$c256 = new \Scriptura\Color\Types\C256(196, '{code}');
 echo "Code:           " . $c256->code() . "\n";
 echo "(string):       " . $c256 . "\n";
 echo "Template:       " . $c256->withTemplate('\e[48;{code}m') . "\n";

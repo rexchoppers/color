@@ -1,10 +1,10 @@
 <?php
 
-namespace Tests\ConvertColor;
+namespace Scriptura\Color\Tests;
 
-use function Color\Helpers\C256toRGB;
-use function Color\Helpers\HSLtoRGB;
-use function Color\Helpers\RGBtoC256;
+use function Scriptura\Color\Helpers\C256toRGB;
+use function Scriptura\Color\Helpers\HSLtoRGB;
+use function Scriptura\Color\Helpers\RGBtoC256;
 
 class functionsTest extends \PHPUnit_Framework_TestCase
 {

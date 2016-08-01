@@ -1,6 +1,6 @@
 <?php
 
-namespace Color\Exceptions;
+namespace Scriptura\Color\Exceptions;
 
 class InvalidArgument extends \Exception
 {
