@@ -5,7 +5,7 @@
 [![Build Status][ico-travis]][link-travis]
 [![Coverage Status][ico-scrutinizer]][link-scrutinizer]
 [![Quality Score][ico-code-quality]][link-code-quality]
-[![Code Climate](ico-codeclimate)][link-codeclimate]
+[![Code Climate][ico-codeclimate]][link-codeclimate]
 [![Total Downloads][ico-downloads]][link-downloads]
 
 Color is a package to convert between color types.
