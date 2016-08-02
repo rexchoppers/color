@@ -87,7 +87,7 @@ class HSL implements Color
     }
 
     /**
-     * @return array
+     * @return float[]
      */
     public function hsl()
     {

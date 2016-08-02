@@ -10,7 +10,7 @@ namespace Scriptura\Color\Helpers;
  *
  * @param string $code Hex code without #
  *
- * @return array [red(0-255), green(0-255), blue(0-255)]
+ * @return int[] [red(0-255), green(0-255), blue(0-255)]
  */
 function HEXtoRGB($code)
 {
@@ -54,7 +54,7 @@ function RGBtoHEX($red, $green, $blue)
  * @param int $green Decimal in range 0-255
  * @param int $blue Decimal in range 0-255
  *
- * @return array [hue(0-360°), saturation(0-100%), lightness(0-100%)]
+ * @return int[] [hue(0-360°), saturation(0-100%), lightness(0-100%)]
  */
 function RGBtoHSL($red, $green, $blue)
 {
@@ -115,7 +115,7 @@ function RGBtoHSL($red, $green, $blue)
  * @param int $saturation Percent in range 0-100
  * @param int $lightness Percent in range 0-100
  *
- * @return array [red(0-255), green(0-255), blue(0-255)]
+ * @return int[] [red(0-255), green(0-255), blue(0-255)]
  */
 function HSLtoRGB($hue, $saturation, $lightness)
 {
@@ -166,7 +166,7 @@ function HSLtoRGB($hue, $saturation, $lightness)
  * @param int $saturation2 Percent in range 0-100
  * @param int $lightness2 Percent in range 0-100
  *
- * @return array [hue(0-360°), saturation(0-100%), lightness(0-100%)]
+ * @return int[] [hue(0-360°), saturation(0-100%), lightness(0-100%)]
  */
 function mixHSL($hue1, $saturation1, $lightness1, $hue2, $saturation2, $lightness2)
 {
@@ -253,7 +253,7 @@ function RGBtoC256($red, $green, $blue)
  *
  * @param int $code Decimal in range 0-255
  *
- * @return array [red(0-255), green(0-255), blue(0-255)]
+ * @return int[] [red(0-255), green(0-255), blue(0-255)]
  */
 function C256toRGB($code)
 {

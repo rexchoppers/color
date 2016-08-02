@@ -170,7 +170,7 @@ The MIT License (MIT). Please see [License File][link-license] for more informat
 [ico-travis]: https://img.shields.io/travis/scripturadesign/color/master.svg?style=flat-square
 [ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/scripturadesign/color.svg?style=flat-square
 [ico-code-quality]: https://img.shields.io/scrutinizer/g/scripturadesign/color.svg?style=flat-square
-[ico-codeclimate]: https://codeclimate.com/github/scripturadesign/color/badges/gpa.svg
+[ico-codeclimate]: https://img.shields.io/codeclimate/github/scripturadesign/color.svg?style=flat-square
 [ico-downloads]: https://img.shields.io/packagist/dt/scripturadesign/color.svg?style=flat-square
 
 [link-packagist]: https://packagist.org/packages/scripturadesign/color

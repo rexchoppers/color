@@ -86,7 +86,7 @@ class RGB implements Color
     }
 
     /**
-     * @return array
+     * @return int[]
      */
     public function rgb()
     {
