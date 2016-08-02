@@ -1,7 +1,11 @@
 # Color
 
 [![Latest Version on Packagist][ico-version]][link-packagist]
-[![Software License][ico-license]][link-license]
+[![Software License][ico-license]](LICENSE.md)
+[![Build Status][ico-travis]][link-travis]
+[![Coverage Status][ico-scrutinizer]][link-scrutinizer]
+[![Quality Score][ico-code-quality]][link-code-quality]
+[![Code Climate](ico-codeclimate)][link-codeclimate]
 [![Total Downloads][ico-downloads]][link-downloads]
 
 Color is a package to convert between color types.
@@ -166,12 +170,14 @@ The MIT License (MIT). Please see [License File][link-license] for more informat
 [ico-travis]: https://img.shields.io/travis/scripturadesign/color/master.svg?style=flat-square
 [ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/scripturadesign/color.svg?style=flat-square
 [ico-code-quality]: https://img.shields.io/scrutinizer/g/scripturadesign/color.svg?style=flat-square
+[ico-codeclimate]: https://codeclimate.com/github/scripturadesign/color/badges/gpa.svg
 [ico-downloads]: https://img.shields.io/packagist/dt/scripturadesign/color.svg?style=flat-square
 
 [link-packagist]: https://packagist.org/packages/scripturadesign/color
 [link-travis]: https://travis-ci.org/scripturadesign/color
 [link-scrutinizer]: https://scrutinizer-ci.com/g/scripturadesign/color/code-structure
 [link-code-quality]: https://scrutinizer-ci.com/g/scripturadesign/color
+[link-codeclimate]: https://codeclimate.com/github/scripturadesign/color
 [link-downloads]: https://packagist.org/packages/scripturadesign/color
 
 [link-author]: https://github.com/martindilling
