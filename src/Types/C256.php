@@ -2,9 +2,9 @@
 
 namespace Scriptura\Color\Types;
 
-use function Scriptura\Color\Helpers\C256toRGB;
 use function Scriptura\Color\Helpers\RGBtoHEX;
 use function Scriptura\Color\Helpers\RGBtoHSL;
+use function Scriptura\Color\Helpers\C256toRGB;
 use Scriptura\Color\Color;
 use Scriptura\Color\Exceptions\InvalidArgument;
 
@@ -30,7 +30,7 @@ class C256 implements Color
      */
     public function __construct($code = 232, $template = null)
     {
-        if ( ! $this->isDecimal($code)) {
+        if (! $this->isDecimal($code)) {
             throw new InvalidArgument("Decimal (0-255) value was expected but [{$code}] was given.");
         }
 

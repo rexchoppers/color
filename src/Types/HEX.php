@@ -2,11 +2,11 @@
 
 namespace Scriptura\Color\Types;
 
+use function Scriptura\Color\Helpers\HEXtoRGB;
+use function Scriptura\Color\Helpers\RGBtoHSL;
+use function Scriptura\Color\Helpers\RGBtoC256;
 use Scriptura\Color\Color;
 use Scriptura\Color\Exceptions\InvalidArgument;
-use function Scriptura\Color\Helpers\HEXtoRGB;
-use function Scriptura\Color\Helpers\RGBtoC256;
-use function Scriptura\Color\Helpers\RGBtoHSL;
 
 class HEX implements Color
 {
@@ -30,7 +30,7 @@ class HEX implements Color
      */
     public function __construct($code = '000000', $template = null)
     {
-        if ( ! $this->isHexColor($code)) {
+        if (! $this->isHexColor($code)) {
             throw new InvalidArgument("Hex value was expected but [{$code}] was given.");
         }
 

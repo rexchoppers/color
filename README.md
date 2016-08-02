@@ -1,4 +1,9 @@
 # Color
+
+[![Latest Version on Packagist][ico-version]][link-packagist]
+[![Software License][ico-license]][link-license]
+[![Total Downloads][ico-downloads]][link-downloads]
+
 Color is a package to convert between color types.
 
 ## Install
@@ -10,6 +15,8 @@ $ composer require scripturadesign/color
 
 ## Usage
 ### HEX
+> *Hexadecimal*
+
 ``` php
 $hex = new \Scriptura\Color\Types\HEX('ff0000'); // New HEX color
 $hex = new \Scriptura\Color\Types\HEX('ff0000', '#{code}'); // New HEX color with template
@@ -40,6 +47,8 @@ Example:
 ```
 
 ### RGB
+> *Red, Green, Blue*
+
 ``` php
 $rgb = new \Scriptura\Color\Types\RGB(255, 0, 0); // New RGB color
 $rgb = new \Scriptura\Color\Types\RGB(255, 0, 0, '{red},{green},{blue}'); // New RGB color with template
@@ -64,6 +73,8 @@ $c256 = $rgb->to256(); // Convert the color to \Scriptura\Color\Types\C256
 `{red},{green},{blue}`
 
 ### HSL
+> *Hue, Saturation, Lightness*
+
 ``` php
 $hsl = new \Scriptura\Color\Types\HSL(0, 100, 50); // New HSL color
 $hsl = new \Scriptura\Color\Types\HSL(0, 100, 50, '{hue}° {saturation}% {lightness}%'); // New HSL color with template
@@ -96,6 +107,13 @@ $mix = $hsl->mix(new \Scriptura\Color\Types\HSL(120, 100, 50)); // Get a new col
 `{hue}° {saturation}% {lightness}%`
 
 ### 256
+> *Terminal 256-color*
+> `000 - 007`:  standard colors
+> `008 - 015`:  high intensity colors
+> `016 - 231`:  216 colors
+> `232 - 255`:  grayscale (black to white)
+> https://en.wikipedia.org/wiki/ANSI_escape_code#Colors
+
 ``` php
 $c256 = new \Scriptura\Color\Types\C256(196); // New 256 color
 $c256 = new \Scriptura\Color\Types\C256(196, '{code}'); // New 256 color with template
@@ -113,30 +131,51 @@ $c256 = $c256->to256(); // Convert the color to \Scriptura\Color\Types\C256
 `{code}`
 
 ## Change log
-Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
 
-## Scripts
-### Testing
-Run the phpunit test suite.
+Please see [CHANGELOG][link-changelog] for more information what has changed recently.
+
+## Testing
+
+The test suite can be run with the following composer script.
 
 ``` bash
 $ composer test
 ```
 
-### Fixing
-Run the PHP Coding Standards Fixer.
+## Contributing and Forking
 
-``` bash
-$ composer fix
-```
+Please note that this project is licensed under the MIT license. We encourage forking of this project, but ask that you keep all copyright, attribution notices, and continue to use the [MIT license][link-license] in your fork of the project.
+
+For further details on Contributing guidelines, please read the [contributing guide][link-contributing].
 
 ## Security
+
 If you discover any security related issues, please email martindilling@gmail.com instead of using the issue tracker.
 
 ## Credits
+
 - [Martin Dilling-Hansen][link-author]
 - [All Contributors][link-contributors]
 
 ## License
-Please see [License File](LICENSE.md) for more information.
 
+The MIT License (MIT). Please see [License File][link-license] for more information.
+
+[ico-version]: https://img.shields.io/packagist/v/scripturadesign/color.svg?style=flat-square
+[ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
+[ico-travis]: https://img.shields.io/travis/scripturadesign/color/master.svg?style=flat-square
+[ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/scripturadesign/color.svg?style=flat-square
+[ico-code-quality]: https://img.shields.io/scrutinizer/g/scripturadesign/color.svg?style=flat-square
+[ico-downloads]: https://img.shields.io/packagist/dt/scripturadesign/color.svg?style=flat-square
+
+[link-packagist]: https://packagist.org/packages/scripturadesign/color
+[link-travis]: https://travis-ci.org/scripturadesign/color
+[link-scrutinizer]: https://scrutinizer-ci.com/g/scripturadesign/color/code-structure
+[link-code-quality]: https://scrutinizer-ci.com/g/scripturadesign/color
+[link-downloads]: https://packagist.org/packages/scripturadesign/color
+
+[link-author]: https://github.com/martindilling
+
+[link-license]: /LICENSE.md
+[link-contributing]: /CONTRIBUTING.md
+[link-contributors]: ../../contributors

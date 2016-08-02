@@ -2,12 +2,12 @@
 
 namespace Scriptura\Color\Types;
 
+use function Scriptura\Color\Helpers\mixHSL;
+use function Scriptura\Color\Helpers\HSLtoRGB;
+use function Scriptura\Color\Helpers\RGBtoHEX;
+use function Scriptura\Color\Helpers\RGBtoC256;
 use Scriptura\Color\Color;
 use Scriptura\Color\Exceptions\InvalidArgument;
-use function Scriptura\Color\Helpers\HSLtoRGB;
-use function Scriptura\Color\Helpers\RGBtoC256;
-use function Scriptura\Color\Helpers\RGBtoHEX;
-use function Scriptura\Color\Helpers\mixHSL;
 
 class HSL implements Color
 {
@@ -43,13 +43,13 @@ class HSL implements Color
      */
     public function __construct($hue = 0, $saturation = 0, $lightness = 0, $template = null)
     {
-        if ( ! $this->isDegree($hue)) {
+        if (! $this->isDegree($hue)) {
             throw new InvalidArgument("Degree (0-360) value was expected but [{$hue}] was given.");
         }
-        if ( ! $this->isPercent($saturation)) {
+        if (! $this->isPercent($saturation)) {
             throw new InvalidArgument("Percent (0-100) value was expected but [{$saturation}] was given.");
         }
-        if ( ! $this->isPercent($lightness)) {
+        if (! $this->isPercent($lightness)) {
             throw new InvalidArgument("Percent (0-100) value was expected but [{$lightness}] was given.");
         }
 

@@ -225,7 +225,7 @@ function RGBtoC256($red, $green, $blue)
     } else {
         $closest = function ($find, $values) {
             $distances = array();
-            foreach($values as $key => $num) {
+            foreach ($values as $key => $num) {
                 $distances[$key] = abs($find - $num);
             }
 
@@ -253,7 +253,7 @@ function RGBtoC256($red, $green, $blue)
  *
  * @param int $code Decimal in range 0-255
  *
- * @return int [red(0-255), green(0-255), blue(0-255)]
+ * @return array [red(0-255), green(0-255), blue(0-255)]
  */
 function C256toRGB($code)
 {

@@ -2,11 +2,11 @@
 
 namespace Scriptura\Color\Types;
 
-use Scriptura\Color\Color;
-use Scriptura\Color\Exceptions\InvalidArgument;
-use function Scriptura\Color\Helpers\RGBtoC256;
 use function Scriptura\Color\Helpers\RGBtoHEX;
 use function Scriptura\Color\Helpers\RGBtoHSL;
+use function Scriptura\Color\Helpers\RGBtoC256;
+use Scriptura\Color\Color;
+use Scriptura\Color\Exceptions\InvalidArgument;
 
 class RGB implements Color
 {
@@ -42,13 +42,13 @@ class RGB implements Color
      */
     public function __construct($red = 0, $green = 0, $blue = 0, $template = null)
     {
-        if ( ! $this->isDecimal($red)) {
+        if (! $this->isDecimal($red)) {
             throw new InvalidArgument("Decimal (0-255) value was expected but [{$red}] was given.");
         }
-        if ( ! $this->isDecimal($green)) {
+        if (! $this->isDecimal($green)) {
             throw new InvalidArgument("Decimal (0-255) value was expected but [{$green}] was given.");
         }
-        if ( ! $this->isDecimal($blue)) {
+        if (! $this->isDecimal($blue)) {
             throw new InvalidArgument("Decimal (0-255) value was expected but [{$blue}] was given.");
         }
 
