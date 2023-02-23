@@ -2,13 +2,17 @@
 
 namespace Scriptura\Color\Tests\Types;
 
+use PHPUnit\Framework\TestCase;
 use Scriptura\Color\Types\C256;
 use Scriptura\Color\Types\HEX;
 use Scriptura\Color\Types\HSL;
 use Scriptura\Color\Types\RGB;
 use Scriptura\Color\Exceptions\InvalidArgument;
+use function PHPUnit\Framework\assertEquals;
+use function PHPUnit\Framework\assertInstanceOf;
+use function PHPUnit\Framework\assertNotEquals;
 
-class C256Test extends \PHPUnit_Framework_TestCase
+class C256Test extends TestCase
 {
     /**
      * @test
@@ -16,7 +20,7 @@ class C256Test extends \PHPUnit_Framework_TestCase
      */
     public function it_fails_with_invalid_code($code)
     {
-        $this->setExpectedException(InvalidArgument::class);
+        $this->expectException(InvalidArgument::class);
 
         $c256 = new C256($code);
     }
@@ -24,7 +28,7 @@ class C256Test extends \PHPUnit_Framework_TestCase
     /**
      * @return array
      */
-    public function failingDataset()
+    public function failingDataset(): array
     {
         return [
             [-1],
@@ -37,7 +41,7 @@ class C256Test extends \PHPUnit_Framework_TestCase
     {
         $c256 = new C256(51);
 
-        assertThat($c256->code(), is(51));
+        assertEquals(51, $c256->code());
     }
 
     /** @test */
@@ -45,7 +49,7 @@ class C256Test extends \PHPUnit_Framework_TestCase
     {
         $c256 = new C256();
 
-        assertThat($c256->code(), is(232));
+        assertEquals(232, $c256->code());
     }
 
     /** @test */
@@ -53,7 +57,7 @@ class C256Test extends \PHPUnit_Framework_TestCase
     {
         $c256 = new C256(232);
 
-        assertThat((string) $c256, is('232'));
+        assertEquals('232', (string) $c256);
     }
 
     /**
@@ -66,8 +70,8 @@ class C256Test extends \PHPUnit_Framework_TestCase
 
         $hex = $c256->toHEX()->withTemplate('# {code}');
 
-        assertThat($hex, is(anInstanceOf(HEX::class)));
-        assertThat((string) $hex, is("# {$hexData}"));
+        assertInstanceOf(HEX::class, $hex);
+        assertEquals("# {$hexData}", (string) $hex);
     }
 
     /**
@@ -80,8 +84,8 @@ class C256Test extends \PHPUnit_Framework_TestCase
 
         $rgb = $c256->toRGB()->withTemplate('{red}, {green}, {blue}');
 
-        assertThat($rgb, is(anInstanceOf(RGB::class)));
-        assertThat((string) $rgb, is("{$rgbData[0]}, {$rgbData[1]}, {$rgbData[2]}"));
+        assertInstanceOf(RGB::class, $rgb);
+        assertEquals("{$rgbData[0]}, {$rgbData[1]}, {$rgbData[2]}", (string) $rgb);
     }
 
     /**
@@ -94,8 +98,8 @@ class C256Test extends \PHPUnit_Framework_TestCase
 
         $hsl = $c256->toHSL()->withTemplate('{hue}deg {saturation}pct {lightness}pct');
 
-        assertThat($hsl, is(anInstanceOf(HSL::class)));
-        assertThat((string) $hsl, is("{$hslData[0]}deg {$hslData[1]}pct {$hslData[2]}pct"));
+        assertInstanceOf(HSL::class, $hsl);
+        assertEquals("{$hslData[0]}deg {$hslData[1]}pct {$hslData[2]}pct", (string) $hsl);
     }
 
     /** @test */
@@ -105,15 +109,15 @@ class C256Test extends \PHPUnit_Framework_TestCase
 
         $clone = $c256->to256()->withTemplate(';{code}');
 
-        assertThat($clone, is(anInstanceOf(C256::class)));
-        assertThat($clone, is(not(sameInstance($c256))));
-        assertThat((string) $clone, is(';16'));
+        assertInstanceOf(C256::class, $clone);
+        assertNotEquals($c256, $clone);
+        assertEquals(';16', (string) $clone);
     }
 
     /**
      * @return array
      */
-    public function colorsDataset()
+    public function colorsDataset(): array
     {
         return [
             ['c256' => 16, 'hex' => '000000', 'rgb' => [0, 0, 0], 'hsl' => [0, 0, 0]],
