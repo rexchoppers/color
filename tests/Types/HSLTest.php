@@ -2,13 +2,17 @@
 
 namespace Scriptura\Color\Tests\Types;
 
+use PHPUnit\Framework\TestCase;
 use Scriptura\Color\Exceptions\InvalidArgument;
 use Scriptura\Color\Types\C256;
 use Scriptura\Color\Types\HEX;
 use Scriptura\Color\Types\HSL;
 use Scriptura\Color\Types\RGB;
+use function PHPUnit\Framework\assertEquals;
+use function PHPUnit\Framework\assertInstanceOf;
+use function PHPUnit\Framework\assertNotEquals;
 
-class HSLTest extends \PHPUnit_Framework_TestCase
+class HSLTest extends TestCase
 {
     /**
      * @test
@@ -16,7 +20,7 @@ class HSLTest extends \PHPUnit_Framework_TestCase
      */
     public function it_fails_with_invalid_range($hue, $saturation, $lightness)
     {
-        $this->setExpectedException(InvalidArgument::class);
+        $this->expectException(InvalidArgument::class);
 
         $hsl = new HSL($hue, $saturation, $lightness);
     }
@@ -24,7 +28,7 @@ class HSLTest extends \PHPUnit_Framework_TestCase
     /**
      * @return array
      */
-    public function failingDataset()
+    public function failingDataset(): array
     {
         return [
             [-1, 50, 50],
@@ -41,9 +45,9 @@ class HSLTest extends \PHPUnit_Framework_TestCase
     {
         $hsl = new HSL(180, 50, 50);
 
-        assertThat($hsl->hue(), is(180));
-        assertThat($hsl->saturation(), is(50));
-        assertThat($hsl->lightness(), is(50));
+        assertEquals($hsl->hue(), 180);
+        assertEquals($hsl->saturation(), 50);
+        assertEquals($hsl->lightness(), 50);
     }
 
     /** @test */
@@ -51,12 +55,14 @@ class HSLTest extends \PHPUnit_Framework_TestCase
     {
         $hsl = new HSL();
 
-        assertThat($hsl->hue(), is(0));
-        assertThat($hsl->saturation(), is(0));
-        assertThat($hsl->lightness(), is(0));
+        assertEquals($hsl->hue(), 0);
+        assertEquals($hsl->saturation(), 0);
+        assertEquals($hsl->lightness(), 0);
     }
 
-    /** @test */
+    /** @test
+     * @throws InvalidArgument
+     */
     public function it_can_change_colors()
     {
         $hsl = new HSL(0, 0, 0);
@@ -65,9 +71,9 @@ class HSLTest extends \PHPUnit_Framework_TestCase
         $hsl = $hsl->withSaturation(75);
         $hsl = $hsl->withLightness(25);
 
-        assertThat($hsl->hue(), is(90));
-        assertThat($hsl->saturation(), is(75));
-        assertThat($hsl->lightness(), is(25));
+        assertEquals($hsl->hue(), 90);
+        assertEquals($hsl->saturation(), 75);
+        assertEquals($hsl->lightness(), 25);
     }
 
     /** @test */
@@ -75,7 +81,7 @@ class HSLTest extends \PHPUnit_Framework_TestCase
     {
         $hsl = new HSL(0, 100, 50);
 
-        assertThat((string) $hsl, is('0° 100% 50%'));
+        assertEquals((string) $hsl, '0° 100% 50%');
     }
 
     /**
@@ -88,8 +94,8 @@ class HSLTest extends \PHPUnit_Framework_TestCase
 
         $hex = $hsl->toHEX()->withTemplate('# {code}');
 
-        assertThat($hex, is(anInstanceOf(HEX::class)));
-        assertThat((string) $hex, is("# {$hexData}"));
+        assertInstanceOf(HEX::class, $hex);
+        assertEquals((string) $hex, "# {$hexData}");
     }
 
     /**
@@ -102,8 +108,8 @@ class HSLTest extends \PHPUnit_Framework_TestCase
 
         $rgb = $hsl->toRGB()->withTemplate('{red}, {green}, {blue}');
 
-        assertThat($rgb, is(anInstanceOf(RGB::class)));
-        assertThat((string) $rgb, is("{$rgbData[0]}, {$rgbData[1]}, {$rgbData[2]}"));
+        assertInstanceOf(RGB::class, $rgb);
+        assertEquals((string) $rgb, "{$rgbData[0]}, {$rgbData[1]}, {$rgbData[2]}");
     }
 
     /** @test */
@@ -113,9 +119,9 @@ class HSLTest extends \PHPUnit_Framework_TestCase
 
         $clone = $hsl->toHSL()->withTemplate('{hue}deg {saturation}pct {lightness}pct');
 
-        assertThat($clone, is(anInstanceOf(HSL::class)));
-        assertThat($clone, is(not(sameInstance($hsl))));
-        assertThat((string) $clone, is('0deg 100pct 50pct'));
+        assertInstanceOf(HSL::class, $clone);
+        assertNotEquals($clone, $hsl);
+        assertEquals((string) $clone, '0deg 100pct 50pct');
     }
 
     /**
@@ -128,14 +134,14 @@ class HSLTest extends \PHPUnit_Framework_TestCase
 
         $c256 = $hsl->to256()->withTemplate(';{code}');
 
-        assertThat($c256, is(anInstanceOf(C256::class)));
-        assertThat((string) $c256, is(";{$c256Data}"));
+        assertInstanceOf(C256::class, $c256);
+        assertEquals((string) $c256, ";{$c256Data}");
     }
 
     /**
      * @return array
      */
-    public function colorsDataset()
+    public function colorsDataset(): array
     {
         return [
             ['hex' => '000000', 'rgb' => [0, 0, 0], 'hsl' => [0, 0, 0], 'c256' => 16],
@@ -159,7 +165,7 @@ class HSLTest extends \PHPUnit_Framework_TestCase
 
         $hsl = $hsl->lighten(25);
 
-        assertThat((string) $hsl, is('0deg 100pct 50pct'));
+        assertEquals((string) $hsl, '0deg 100pct 50pct');
     }
 
     /** @test */
@@ -169,7 +175,7 @@ class HSLTest extends \PHPUnit_Framework_TestCase
 
         $hsl = $hsl->lighten(11);
 
-        assertThat((string) $hsl, is('0deg 100pct 100pct'));
+        assertEquals((string) $hsl, '0deg 100pct 100pct');
     }
 
     /** @test */
@@ -179,7 +185,7 @@ class HSLTest extends \PHPUnit_Framework_TestCase
 
         $hsl = $hsl->darken(25);
 
-        assertThat((string) $hsl, is('0deg 100pct 25pct'));
+        assertEquals((string) $hsl, '0deg 100pct 25pct');
     }
 
     /** @test */
@@ -189,7 +195,7 @@ class HSLTest extends \PHPUnit_Framework_TestCase
 
         $hsl = $hsl->darken(11);
 
-        assertThat((string) $hsl, is('0deg 100pct 0pct'));
+        assertEquals((string) $hsl, '0deg 100pct 0pct');
     }
 
     /** @test */
@@ -199,7 +205,7 @@ class HSLTest extends \PHPUnit_Framework_TestCase
 
         $hsl = $hsl->saturate(25);
 
-        assertThat((string) $hsl, is('0deg 50pct 50pct'));
+        assertEquals((string) $hsl, '0deg 50pct 50pct');
     }
 
     /** @test */
@@ -209,7 +215,7 @@ class HSLTest extends \PHPUnit_Framework_TestCase
 
         $hsl = $hsl->saturate(11);
 
-        assertThat((string) $hsl, is('0deg 100pct 50pct'));
+        assertEquals((string) $hsl, '0deg 100pct 50pct');
     }
 
     /** @test */
@@ -219,7 +225,7 @@ class HSLTest extends \PHPUnit_Framework_TestCase
 
         $hsl = $hsl->desaturate(25);
 
-        assertThat((string) $hsl, is('0deg 25pct 50pct'));
+        assertEquals((string) $hsl, '0deg 25pct 50pct');
     }
 
     /** @test */
@@ -229,7 +235,7 @@ class HSLTest extends \PHPUnit_Framework_TestCase
 
         $hsl = $hsl->desaturate(11);
 
-        assertThat((string) $hsl, is('0deg 0pct 50pct'));
+        assertEquals((string) $hsl, '0deg 0pct 50pct');
     }
 
     /**
@@ -243,13 +249,13 @@ class HSLTest extends \PHPUnit_Framework_TestCase
 
         $mixed = $first->mix($second);
 
-        assertThat((string) $mixed->withTemplate('{hue}deg {saturation}pct {lightness}pct'), is("{$mix[0]}deg {$mix[1]}pct {$mix[2]}pct"));
+        assertEquals((string) $mixed->withTemplate('{hue}deg {saturation}pct {lightness}pct'), "{$mix[0]}deg {$mix[1]}pct {$mix[2]}pct");
     }
 
     /**
      * @return array
      */
-    public function mixDataset()
+    public function mixDataset(): array
     {
         return [
             ['one' => [0, 100, 50], 'two' => [120, 100, 50], 'mix' => [60, 100, 50]],
