@@ -2,13 +2,18 @@
 
 namespace Scriptura\Color\Tests\Types;
 
+use PHPUnit\Framework\TestCase;
 use Scriptura\Color\Types\C256;
 use Scriptura\Color\Types\HEX;
 use Scriptura\Color\Types\HSL;
 use Scriptura\Color\Types\RGB;
 use Scriptura\Color\Exceptions\InvalidArgument;
+use function PHPUnit\Framework\assertEquals;
+use function PHPUnit\Framework\assertInstanceOf;
+use function PHPUnit\Framework\assertNotEquals;
+use function PHPUnit\Framework\assertNotInstanceOf;
 
-class RGBTest extends \PHPUnit_Framework_TestCase
+class RGBTest extends TestCase
 {
     /**
      * @test
@@ -16,7 +21,7 @@ class RGBTest extends \PHPUnit_Framework_TestCase
      */
     public function it_fails_with_invalid_range($red, $green, $blue)
     {
-        $this->setExpectedException(InvalidArgument::class);
+        $this->expectException(InvalidArgument::class);
 
         $rgb = new RGB($red, $green, $blue);
     }
@@ -24,7 +29,7 @@ class RGBTest extends \PHPUnit_Framework_TestCase
     /**
      * @return array
      */
-    public function failingDataset()
+    public function failingDataset(): array
     {
         return [
             [256, 100, 100],
@@ -36,14 +41,16 @@ class RGBTest extends \PHPUnit_Framework_TestCase
         ];
     }
 
-    /** @test */
+    /** @test
+     * @throws InvalidArgument
+     */
     public function it_stores_the_color()
     {
         $rgb = new RGB(200, 100, 0);
 
-        assertThat($rgb->red(), is(200));
-        assertThat($rgb->green(), is(100));
-        assertThat($rgb->blue(), is(0));
+        assertEquals($rgb->red(), 200);
+        assertEquals($rgb->green(), 100);
+        assertEquals($rgb->blue(), 0);
     }
 
     /** @test */
@@ -51,9 +58,9 @@ class RGBTest extends \PHPUnit_Framework_TestCase
     {
         $rgb = new RGB();
 
-        assertThat($rgb->red(), is(0));
-        assertThat($rgb->green(), is(0));
-        assertThat($rgb->blue(), is(0));
+        assertEquals($rgb->red(), 0);
+        assertEquals($rgb->green(), 0);
+        assertEquals($rgb->blue(), 0);
     }
 
     /** @test */
@@ -65,9 +72,9 @@ class RGBTest extends \PHPUnit_Framework_TestCase
         $rgb = $rgb->withGreen(150);
         $rgb = $rgb->withBlue(50);
 
-        assertThat($rgb->red(), is(250));
-        assertThat($rgb->green(), is(150));
-        assertThat($rgb->blue(), is(50));
+        assertEquals($rgb->red(), 250);
+        assertEquals($rgb->green(), 150);
+        assertEquals($rgb->blue(), 50);
     }
 
     /** @test */
@@ -75,7 +82,7 @@ class RGBTest extends \PHPUnit_Framework_TestCase
     {
         $rgb = new RGB(12, 34, 56);
 
-        assertThat((string) $rgb, is('12,34,56'));
+        assertEquals((string) $rgb, '12,34,56');
     }
 
     /**
@@ -88,8 +95,8 @@ class RGBTest extends \PHPUnit_Framework_TestCase
 
         $hex = $rgb->toHEX()->withTemplate('# {code}');
 
-        assertThat($hex, is(anInstanceOf(HEX::class)));
-        assertThat((string) $hex, is("# {$hexData}"));
+        assertInstanceOf(HEX::class, $hex);
+        assertEquals((string) $hex, "# {$hexData}");
     }
 
     /** @test */
@@ -99,9 +106,9 @@ class RGBTest extends \PHPUnit_Framework_TestCase
 
         $clone = $rgb->toRGB()->withTemplate('{red}, {green}, {blue}');
 
-        assertThat($clone, is(anInstanceOf(RGB::class)));
-        assertThat($clone, is(not(sameInstance($rgb))));
-        assertThat((string) $clone, is('255, 153, 0'));
+        assertInstanceOf(RGB::class, $clone);
+        assertNotEquals($clone, $rgb);
+        assertEquals((string) $clone, '255, 153, 0');
     }
 
     /**
@@ -114,8 +121,8 @@ class RGBTest extends \PHPUnit_Framework_TestCase
 
         $hsl = $rgb->toHSL()->withTemplate('{hue}deg {saturation}pct {lightness}pct');
 
-        assertThat($hsl, is(anInstanceOf(HSL::class)));
-        assertThat((string) $hsl, is("{$hslData[0]}deg {$hslData[1]}pct {$hslData[2]}pct"));
+        assertInstanceOf(HSL::class, $hsl);
+        assertEquals((string) $hsl, "{$hslData[0]}deg {$hslData[1]}pct {$hslData[2]}pct");
     }
 
     /**
@@ -128,8 +135,8 @@ class RGBTest extends \PHPUnit_Framework_TestCase
 
         $c256 = $rgb->to256()->withTemplate(';{code}');
 
-        assertThat($c256, is(anInstanceOf(C256::class)));
-        assertThat((string) $c256, is(";{$c256Data}"));
+        assertInstanceOf(C256::class, $c256);
+        assertEquals((string) $c256, ";{$c256Data}");
     }
 
     /**
