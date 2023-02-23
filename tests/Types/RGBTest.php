@@ -142,7 +142,7 @@ class RGBTest extends TestCase
     /**
      * @return array
      */
-    public function colorsDataset()
+    public function colorsDataset(): array
     {
         return [
             ['hex' => '000000', 'rgb' => [0, 0, 0], 'hsl' => [0, 0, 0], 'c256' => 16],
