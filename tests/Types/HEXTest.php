@@ -2,13 +2,17 @@
 
 namespace Scriptura\Color\Tests\Types;
 
+use PHPUnit\Framework\TestCase;
 use Scriptura\Color\Types\C256;
 use Scriptura\Color\Types\HEX;
 use Scriptura\Color\Types\HSL;
 use Scriptura\Color\Types\RGB;
 use Scriptura\Color\Exceptions\InvalidArgument;
+use function PHPUnit\Framework\assertEquals;
+use function PHPUnit\Framework\assertInstanceOf;
+use function PHPUnit\Framework\assertNotEquals;
 
-class HEXTest extends \PHPUnit_Framework_TestCase
+class HEXTest extends TestCase
 {
     /**
      * @test
@@ -16,7 +20,7 @@ class HEXTest extends \PHPUnit_Framework_TestCase
      */
     public function it_fails_with_invalid_code($code)
     {
-        $this->setExpectedException(InvalidArgument::class);
+        $this->expectException(InvalidArgument::class);
 
         $hex = new HEX($code);
     }
@@ -24,7 +28,7 @@ class HEXTest extends \PHPUnit_Framework_TestCase
     /**
      * @return array
      */
-    public function failingDataset()
+    public function failingDataset(): array
     {
         return [
             [1],
@@ -45,7 +49,7 @@ class HEXTest extends \PHPUnit_Framework_TestCase
     {
         $hex = new HEX('ABCDEF');
 
-        assertThat($hex->code(), is('ABCDEF'));
+        assertEquals($hex->code(), 'ABCDEF');
     }
 
     /** @test */
@@ -53,7 +57,7 @@ class HEXTest extends \PHPUnit_Framework_TestCase
     {
         $hex = new HEX();
 
-        assertThat($hex->code(), is('00000'));
+        assertEquals($hex->code(), '000000');
     }
 
     /**
@@ -64,13 +68,13 @@ class HEXTest extends \PHPUnit_Framework_TestCase
     {
         $hex = new HEX($before);
 
-        assertThat($hex->code(), is(equalTo($after)));
+        assertEquals($hex->code(), $after);
     }
 
     /**
      * @return array
      */
-    public function validDataset()
+    public function validDataset(): array
     {
         return [
             [123, '112233'],
@@ -87,7 +91,7 @@ class HEXTest extends \PHPUnit_Framework_TestCase
     {
         $hex = new HEX('ABCDEF');
 
-        assertThat((string) $hex, is('#ABCDEF'));
+        assertEquals((string) $hex, '#ABCDEF');
     }
 
     /** @test */
@@ -97,9 +101,9 @@ class HEXTest extends \PHPUnit_Framework_TestCase
 
         $clone = $hex->toHEX()->withTemplate('# {code}');
 
-        assertThat($clone, is(anInstanceOf(HEX::class)));
-        assertThat($clone, is(not(sameInstance($hex))));
-        assertThat((string) $clone, is('# FF9900'));
+        assertInstanceOf(HEX::class, $clone);
+        assertNotEquals($clone, $hex);
+        assertEquals((string) $clone, '# FF9900');
     }
 
     /**
@@ -112,8 +116,8 @@ class HEXTest extends \PHPUnit_Framework_TestCase
 
         $rgb = $hex->toRGB()->withTemplate('{red}, {green}, {blue}');
 
-        assertThat($rgb, is(anInstanceOf(RGB::class)));
-        assertThat((string) $rgb, is("{$rgbData[0]}, {$rgbData[1]}, {$rgbData[2]}"));
+        assertInstanceOf(RGB::class, $rgb);
+        assertEquals((string) $rgb, "{$rgbData[0]}, {$rgbData[1]}, {$rgbData[2]}");
     }
 
     /**
@@ -126,8 +130,8 @@ class HEXTest extends \PHPUnit_Framework_TestCase
 
         $hsl = $hex->toHSL()->withTemplate('{hue}deg {saturation}pct {lightness}pct');
 
-        assertThat($hsl, is(anInstanceOf(HSL::class)));
-        assertThat((string) $hsl, is("{$hslData[0]}deg {$hslData[1]}pct {$hslData[2]}pct"));
+        assertInstanceOf(HSL::class, $hsl);
+        assertEquals((string) $hsl, "{$hslData[0]}deg {$hslData[1]}pct {$hslData[2]}pct");
     }
 
     /**
@@ -140,14 +144,14 @@ class HEXTest extends \PHPUnit_Framework_TestCase
 
         $c256 = $hex->to256()->withTemplate(';{code}');
 
-        assertThat($c256, is(anInstanceOf(C256::class)));
-        assertThat((string) $c256, is(";{$c256Data}"));
+        assertInstanceOf(C256::class, $c256);
+        assertEquals((string) $c256, ";{$c256Data}");
     }
 
     /**
      * @return array
      */
-    public function colorsDataset()
+    public function colorsDataset(): array
     {
         return [
             ['hex' => '000000', 'rgb' => [0, 0, 0], 'hsl' => [0, 0, 0], 'c256' => 16],
