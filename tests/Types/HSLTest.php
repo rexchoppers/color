@@ -45,9 +45,9 @@ class HSLTest extends TestCase
     {
         $hsl = new HSL(180, 50, 50);
 
-        assertEquals($hsl->hue(), 180);
-        assertEquals($hsl->saturation(), 50);
-        assertEquals($hsl->lightness(), 50);
+        assertEquals(180, $hsl->hue());
+        assertEquals(50, $hsl->saturation());
+        assertEquals(50, $hsl->lightness());
     }
 
     /** @test */
@@ -55,9 +55,9 @@ class HSLTest extends TestCase
     {
         $hsl = new HSL();
 
-        assertEquals($hsl->hue(), 0);
-        assertEquals($hsl->saturation(), 0);
-        assertEquals($hsl->lightness(), 0);
+        assertEquals(0, $hsl->hue());
+        assertEquals(0, $hsl->saturation());
+        assertEquals( 0, $hsl->lightness());
     }
 
     /** @test
@@ -71,9 +71,9 @@ class HSLTest extends TestCase
         $hsl = $hsl->withSaturation(75);
         $hsl = $hsl->withLightness(25);
 
-        assertEquals($hsl->hue(), 90);
-        assertEquals($hsl->saturation(), 75);
-        assertEquals($hsl->lightness(), 25);
+        assertEquals(90, $hsl->hue());
+        assertEquals(75, $hsl->saturation());
+        assertEquals(25, $hsl->lightness());
     }
 
     /** @test */
@@ -81,7 +81,7 @@ class HSLTest extends TestCase
     {
         $hsl = new HSL(0, 100, 50);
 
-        assertEquals((string) $hsl, '0° 100% 50%');
+        assertEquals('0° 100% 50%', (string) $hsl);
     }
 
     /**
@@ -95,7 +95,7 @@ class HSLTest extends TestCase
         $hex = $hsl->toHEX()->withTemplate('# {code}');
 
         assertInstanceOf(HEX::class, $hex);
-        assertEquals((string) $hex, "# {$hexData}");
+        assertEquals("# {$hexData}", (string) $hex);
     }
 
     /**
@@ -109,7 +109,7 @@ class HSLTest extends TestCase
         $rgb = $hsl->toRGB()->withTemplate('{red}, {green}, {blue}');
 
         assertInstanceOf(RGB::class, $rgb);
-        assertEquals((string) $rgb, "{$rgbData[0]}, {$rgbData[1]}, {$rgbData[2]}");
+        assertEquals("{$rgbData[0]}, {$rgbData[1]}, {$rgbData[2]}", (string) $rgb);
     }
 
     /** @test */
@@ -120,8 +120,8 @@ class HSLTest extends TestCase
         $clone = $hsl->toHSL()->withTemplate('{hue}deg {saturation}pct {lightness}pct');
 
         assertInstanceOf(HSL::class, $clone);
-        assertNotEquals($clone, $hsl);
-        assertEquals((string) $clone, '0deg 100pct 50pct');
+        assertNotEquals($hsl, $clone);
+        assertEquals('0deg 100pct 50pct', (string) $clone);
     }
 
     /**
@@ -135,7 +135,7 @@ class HSLTest extends TestCase
         $c256 = $hsl->to256()->withTemplate(';{code}');
 
         assertInstanceOf(C256::class, $c256);
-        assertEquals((string) $c256, ";{$c256Data}");
+        assertEquals(";{$c256Data}", (string) $c256);
     }
 
     /**
@@ -165,7 +165,7 @@ class HSLTest extends TestCase
 
         $hsl = $hsl->lighten(25);
 
-        assertEquals((string) $hsl, '0deg 100pct 50pct');
+        assertEquals('0deg 100pct 50pct', (string) $hsl);
     }
 
     /** @test */
@@ -175,7 +175,7 @@ class HSLTest extends TestCase
 
         $hsl = $hsl->lighten(11);
 
-        assertEquals((string) $hsl, '0deg 100pct 100pct');
+        assertEquals('0deg 100pct 100pct', (string) $hsl);
     }
 
     /** @test */
@@ -185,7 +185,7 @@ class HSLTest extends TestCase
 
         $hsl = $hsl->darken(25);
 
-        assertEquals((string) $hsl, '0deg 100pct 25pct');
+        assertEquals('0deg 100pct 25pct', (string) $hsl);
     }
 
     /** @test */
@@ -195,7 +195,7 @@ class HSLTest extends TestCase
 
         $hsl = $hsl->darken(11);
 
-        assertEquals((string) $hsl, '0deg 100pct 0pct');
+        assertEquals('0deg 100pct 0pct', (string) $hsl);
     }
 
     /** @test */
@@ -205,7 +205,7 @@ class HSLTest extends TestCase
 
         $hsl = $hsl->saturate(25);
 
-        assertEquals((string) $hsl, '0deg 50pct 50pct');
+        assertEquals('0deg 50pct 50pct', (string) $hsl);
     }
 
     /** @test */
@@ -215,7 +215,7 @@ class HSLTest extends TestCase
 
         $hsl = $hsl->saturate(11);
 
-        assertEquals((string) $hsl, '0deg 100pct 50pct');
+        assertEquals('0deg 100pct 50pct', (string) $hsl);
     }
 
     /** @test */
@@ -225,7 +225,7 @@ class HSLTest extends TestCase
 
         $hsl = $hsl->desaturate(25);
 
-        assertEquals((string) $hsl, '0deg 25pct 50pct');
+        assertEquals('0deg 25pct 50pct', (string) $hsl);
     }
 
     /** @test */
@@ -235,7 +235,7 @@ class HSLTest extends TestCase
 
         $hsl = $hsl->desaturate(11);
 
-        assertEquals((string) $hsl, '0deg 0pct 50pct');
+        assertEquals('0deg 0pct 50pct', (string) $hsl);
     }
 
     /**
@@ -249,7 +249,7 @@ class HSLTest extends TestCase
 
         $mixed = $first->mix($second);
 
-        assertEquals((string) $mixed->withTemplate('{hue}deg {saturation}pct {lightness}pct'), "{$mix[0]}deg {$mix[1]}pct {$mix[2]}pct");
+        assertEquals("{$mix[0]}deg {$mix[1]}pct {$mix[2]}pct", (string) $mixed->withTemplate('{hue}deg {saturation}pct {lightness}pct'));
     }
 
     /**

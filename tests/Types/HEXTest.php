@@ -49,7 +49,7 @@ class HEXTest extends TestCase
     {
         $hex = new HEX('ABCDEF');
 
-        assertEquals($hex->code(), 'ABCDEF');
+        assertEquals('ABCDEF', $hex->code());
     }
 
     /** @test */
@@ -57,7 +57,7 @@ class HEXTest extends TestCase
     {
         $hex = new HEX();
 
-        assertEquals($hex->code(), '000000');
+        assertEquals('000000', $hex->code());
     }
 
     /**
@@ -68,7 +68,7 @@ class HEXTest extends TestCase
     {
         $hex = new HEX($before);
 
-        assertEquals($hex->code(), $after);
+        assertEquals($after, $hex->code());
     }
 
     /**
@@ -91,7 +91,7 @@ class HEXTest extends TestCase
     {
         $hex = new HEX('ABCDEF');
 
-        assertEquals((string) $hex, '#ABCDEF');
+        assertEquals('#ABCDEF', (string) $hex);
     }
 
     /** @test */
@@ -102,8 +102,8 @@ class HEXTest extends TestCase
         $clone = $hex->toHEX()->withTemplate('# {code}');
 
         assertInstanceOf(HEX::class, $clone);
-        assertNotEquals($clone, $hex);
-        assertEquals((string) $clone, '# FF9900');
+        assertNotEquals($hex, $clone);
+        assertEquals('# FF9900', (string) $clone);
     }
 
     /**
@@ -117,7 +117,7 @@ class HEXTest extends TestCase
         $rgb = $hex->toRGB()->withTemplate('{red}, {green}, {blue}');
 
         assertInstanceOf(RGB::class, $rgb);
-        assertEquals((string) $rgb, "{$rgbData[0]}, {$rgbData[1]}, {$rgbData[2]}");
+        assertEquals("{$rgbData[0]}, {$rgbData[1]}, {$rgbData[2]}", (string) $rgb);
     }
 
     /**
@@ -131,7 +131,7 @@ class HEXTest extends TestCase
         $hsl = $hex->toHSL()->withTemplate('{hue}deg {saturation}pct {lightness}pct');
 
         assertInstanceOf(HSL::class, $hsl);
-        assertEquals((string) $hsl, "{$hslData[0]}deg {$hslData[1]}pct {$hslData[2]}pct");
+        assertEquals("{$hslData[0]}deg {$hslData[1]}pct {$hslData[2]}pct", (string) $hsl);
     }
 
     /**
@@ -145,7 +145,7 @@ class HEXTest extends TestCase
         $c256 = $hex->to256()->withTemplate(';{code}');
 
         assertInstanceOf(C256::class, $c256);
-        assertEquals((string) $c256, ";{$c256Data}");
+        assertEquals(";{$c256Data}", (string) $c256);
     }
 
     /**

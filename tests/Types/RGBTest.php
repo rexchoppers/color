@@ -48,9 +48,9 @@ class RGBTest extends TestCase
     {
         $rgb = new RGB(200, 100, 0);
 
-        assertEquals($rgb->red(), 200);
-        assertEquals($rgb->green(), 100);
-        assertEquals($rgb->blue(), 0);
+        assertEquals(200, $rgb->red());
+        assertEquals(100, $rgb->green());
+        assertEquals(0, $rgb->blue());
     }
 
     /** @test */
@@ -58,9 +58,9 @@ class RGBTest extends TestCase
     {
         $rgb = new RGB();
 
-        assertEquals($rgb->red(), 0);
-        assertEquals($rgb->green(), 0);
-        assertEquals($rgb->blue(), 0);
+        assertEquals(0, $rgb->red());
+        assertEquals(0, $rgb->green());
+        assertEquals(0, $rgb->blue());
     }
 
     /** @test */
@@ -72,9 +72,9 @@ class RGBTest extends TestCase
         $rgb = $rgb->withGreen(150);
         $rgb = $rgb->withBlue(50);
 
-        assertEquals($rgb->red(), 250);
-        assertEquals($rgb->green(), 150);
-        assertEquals($rgb->blue(), 50);
+        assertEquals(250, $rgb->red());
+        assertEquals(150, $rgb->green());
+        assertEquals(50, $rgb->blue());
     }
 
     /** @test */
@@ -82,7 +82,7 @@ class RGBTest extends TestCase
     {
         $rgb = new RGB(12, 34, 56);
 
-        assertEquals((string) $rgb, '12,34,56');
+        assertEquals('12,34,56', (string) $rgb);
     }
 
     /**
@@ -96,7 +96,7 @@ class RGBTest extends TestCase
         $hex = $rgb->toHEX()->withTemplate('# {code}');
 
         assertInstanceOf(HEX::class, $hex);
-        assertEquals((string) $hex, "# {$hexData}");
+        assertEquals("# {$hexData}", (string) $hex);
     }
 
     /** @test */
@@ -107,8 +107,8 @@ class RGBTest extends TestCase
         $clone = $rgb->toRGB()->withTemplate('{red}, {green}, {blue}');
 
         assertInstanceOf(RGB::class, $clone);
-        assertNotEquals($clone, $rgb);
-        assertEquals((string) $clone, '255, 153, 0');
+        assertNotEquals($rgb, $clone);
+        assertEquals('255, 153, 0', (string) $clone);
     }
 
     /**
@@ -122,7 +122,7 @@ class RGBTest extends TestCase
         $hsl = $rgb->toHSL()->withTemplate('{hue}deg {saturation}pct {lightness}pct');
 
         assertInstanceOf(HSL::class, $hsl);
-        assertEquals((string) $hsl, "{$hslData[0]}deg {$hslData[1]}pct {$hslData[2]}pct");
+        assertEquals("{$hslData[0]}deg {$hslData[1]}pct {$hslData[2]}pct", (string) $hsl);
     }
 
     /**
@@ -136,7 +136,7 @@ class RGBTest extends TestCase
         $c256 = $rgb->to256()->withTemplate(';{code}');
 
         assertInstanceOf(C256::class, $c256);
-        assertEquals((string) $c256, ";{$c256Data}");
+        assertEquals(";{$c256Data}", (string) $c256);
     }
 
     /**
